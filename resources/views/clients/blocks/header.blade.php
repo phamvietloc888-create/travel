@@ -28,9 +28,10 @@
 		<div class="container">
 			<a class="navbar-brand" href="index.html">Pacific<span>Travel Agency</span></a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+			
 				<span class="oi oi-menu"></span> Menu
 			</button>
-
+			
 			<div class="collapse navbar-collapse" id="ftco-nav">
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item {{ request()->routeIs('home') ? 'active' : '' }}">
@@ -59,7 +60,9 @@
 				</ul>
 			</div>
 		</div>
-		
+			<div class="nav-auth">
+		 <a href="login.php" class="auth-btn">Login</a>
+		</div>
 	</nav>	
 	
 	<!-- END nav -->
