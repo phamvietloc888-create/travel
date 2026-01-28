@@ -1,29 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<title>Pacific - Free Bootstrap 4 Template by Colorlib</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	
-	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css2?family=Arizonia&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-	<link rel="stylesheet" href="{{ asset('clients/css/bootstrap.min.css') }}">
-
-<link rel="stylesheet" href="{{ asset('clients/css/animate.css') }}">
-<link rel="stylesheet" href="{{ asset('clients/css/owl.carousel.min.css') }}">
-<link rel="stylesheet" href="{{ asset('clients/css/owl.theme.default.min.css') }}">
-<link rel="stylesheet" href="{{ asset('clients/css/magnific-popup.css') }}">
-<link rel="stylesheet" href="{{ asset('clients/css/bootstrap-datepicker.css') }}">
-<link rel="stylesheet" href="{{ asset('clients/css/jquery.timepicker.css') }}">
-<link rel="stylesheet" href="{{ asset('clients/css/flaticon.css') }}">
-<link rel="stylesheet" href="{{ asset('clients/css/style.css') }}">
-
-
-</head>
-<body>
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 		<div class="container">
 			<a class="navbar-brand" href="index.html">Pacific<span>Travel Agency</span></a>
@@ -61,8 +36,63 @@
 			</div>
 		</div>
 			<div class="nav-auth">
-		 <a href="login.php" class="auth-btn">Login</a>
+		
+		<a href="#" class="auth-btn" data-toggle="modal" data-target="#loginModal">Login</a>
 		</div>
+		
 	</nav>	
-	
+			<div class="modal fade" id="loginModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content auth-modal">
+      <div class="modal-header">
+        <h5 class="modal-title">Login</h5>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <input type="email" class="form-control" placeholder="Email">
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control" placeholder="Password">
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Login</button>
+        </form>
+        <p class="text-center mt-3">
+          Chưa có tài khoản?
+          <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#signupModal">Sign up</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="signupModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content auth-modal">
+      <div class="modal-header">
+        <h5 class="modal-title">Sign Up</h5>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Full Name">
+          </div>
+          <div class="form-group">
+            <input type="email" class="form-control" placeholder="Email">
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control" placeholder="Password">
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+
+        </form>
+        <p class="text-center mt-3">
+          Đã có tài khoản?
+          <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#loginModal">Login</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
 	<!-- END nav -->

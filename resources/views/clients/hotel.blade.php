@@ -1,4 +1,6 @@
-	@include('clients.blocks.header')
+	@extends('clients.layout')
+
+@section('content')
  
  <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('{{ asset('clients/images/bg_1.jpg')}}');">
   <div class="overlay"></div>
@@ -301,5 +303,4 @@
 </div>
 </section>
 
-
-    @include('clients.blocks.footer')
+@endsection
