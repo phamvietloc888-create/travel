@@ -33,8 +33,9 @@
     {{-- FOOTER --}}
     @include('clients.blocks.footer')
 
-    {{-- JS (BẮT BUỘC) --}}
+    {{-- JS --}}
     <script src="{{ asset('clients/js/jquery.min.js') }}"></script>
     <script src="{{ asset('clients/js/bootstrap.bundle.min.js') }}"></script>
 </body>
+
 </html>

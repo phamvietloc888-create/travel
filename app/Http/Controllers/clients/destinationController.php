@@ -1,65 +1,41 @@
 <?php
 
-namespace App\Http\Controllers\clients;
+namespace App\Http\Controllers\Clients;
 
 use App\Http\Controllers\Controller;
+use App\Models\Destination;
+use App\Models\Tour;
 use Illuminate\Http\Request;
 
-class destinationController extends Controller
+class DestinationController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Danh sách destination
      */
     public function index()
     {
-       return view('clients.destination');
+        $destinations = Destination::withCount('tours')
+            ->where('status', 'PUBLISHED')
+            ->latest()
+            ->paginate(6);
+
+        return view('clients.destination', compact('destinations'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Danh sách tour theo destination
      */
-    public function create()
+    public function show($slug)
     {
-        //
-    }
+        $destination = Destination::where('slug', $slug)
+            ->where('status', 'PUBLISHED')
+            ->firstOrFail();
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        $tours = Tour::where('destination_id', $destination->id)
+            ->where('status', 'PUBLISHED')
+            ->latest()
+            ->paginate(6);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return view('clients.tours-by-destination', compact('destination', 'tours'));
     }
 }

@@ -1,6 +1,8 @@
+
 @extends('clients.layout')
 
 @section('content')
+
 	<div class="hero-wrap js-fullheight" style="background-image: url('{{ asset('clients/images/bg_5.jpg') }}');">
 		<div class="overlay"></div>
 		<div class="container">
@@ -155,189 +157,63 @@
 			<div class="container container-2">
 				<div class="row">
 					<div class="col-md-12">
-						<div class="carousel-destination owl-carousel ftco-animate">
-							<div class="item">
-								<div class="project-destination">
-									<a href="#" class="img" style="background-image:  url('{{ asset('clients/images/place-1.jpg')}}');">
-										<div class="text">
-											<h3>Đà Nẵng</h3>
-											<span>8 Tours</span>
-										</div>
-									</a>
-								</div>
-							</div>
-							<div class="item">
-								<div class="project-destination">
-									<a href="#" class="img" style="background-image:  url('{{ asset('clients/images/place-2.jpg')}}');">
-										<div class="text">
-											<h3>Ninh Bình</h3>
-											<span>2 Tours</span>
-										</div>
-									</a>
-								</div>
-							</div>
-							<div class="item">
-								<div class="project-destination">
-									<a href="#" class="img" style="background-image: url('{{ asset('clients/images/place-3.jpg')}}');">
-										<div class="text">
-											<h3>đà lạt</h3>
-											<span>5 Tours</span>
-										</div>
-									</a>
-								</div>
-							</div>
-							<div class="item">
-								<div class="project-destination">
-									<a href="#" class="img" style="background-image: url('{{ asset('clients/images/place-4.jpg')}}');">
-										<div class="text">
-											<h3>Hạ Long Bay</h3>
-											<span>5 Tours</span>
-										</div>
-									</a>
-								</div>
-							</div>
-							<div class="item">
-								<div class="project-destination">
-									<a href="#" class="img" style="background-image: url('{{ asset('clients/images/place-5.jpg')}}');">
-										<div class="text">
-											<h3>Quy Nhơn</h3>
-											<span>7 Tours</span>
-										</div>
-									</a>
-								</div>
-							</div>
-							<div class="item">
-								<div class="project-destination">
-									<a href="#" class="img" style="background-image: url('{{ asset('clients/images/place-6.jpg')}}');">
-										<div class="text">
-											<h3>Hội An</h3>
-											<span>5 Tours</span>
-										</div>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+				<div class="carousel-destination owl-carousel ftco-animate">
+@foreach($carouselDestinations as $destination)
+<div class="item">
+    <div class="project-destination">
+        <a href="{{ route('tours.byDestination', $destination->slug) }}"
+           class="img"
+           style="background-image: url('{{ Storage::url($destination->thumbnail_path) }}');">
+
+            <div class="text">
+                <h3>{{ $destination->name }}</h3>
+                <span>{{ $destination->total_tours }} Tours</span>
+            </div>
+        </a>
+    </div>
+</div>
+@endforeach
+
+
+</div>
 		</section>
 
-		<section class="ftco-section">
-			<div class="container">
-				<div class="row justify-content-center pb-4">
-					<div class="col-md-12 heading-section text-center ftco-animate">
-						<span class="subheading">Destination</span>
-						<h2 class="mb-4">Tour Destination</h2>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-4 ftco-animate">
-						<div class="project-wrap">
-							<a href="#" class="img" style="background-image: url('{{ asset('clients/images/destination-1.jpg')}}');">
-								<span class="price">$550/person</span>
-							</a>
-							<div class="text p-4">
-								<span class="days">8 Days Tour</span>
-								<h3><a href="#">Banaue Rice Terraces</a></h3>
-								<p class="location"><span class="fa fa-map-marker"></span> Banaue, Ifugao, Philippines</p>
-								<ul>
-									<li><span class="flaticon-shower"></span>2</li>
-									<li><span class="flaticon-king-size"></span>3</li>
-									<li><span class="flaticon-mountains"></span>Near Mountain</li>
-								</ul>
-							</div>
+			<section class="ftco-section">
+				<div class="container">
+					<div class="row justify-content-center pb-4">
+						<div class="col-md-12 heading-section text-center ftco-animate">
+							<span class="subheading">Destination</span>
+							<h2 class="mb-4">Tour Destination</h2>
 						</div>
 					</div>
-					<div class="col-md-4 ftco-animate">
-						<div class="project-wrap">
-							<a href="#" class="img" style="background-image: url('{{ asset('clients/images/destination-2.jpg')}}');">
-								<span class="price">$550/person</span>
-							</a>
-							<div class="text p-4">
-								<span class="days">10 Days Tour</span>
-								<h3><a href="#">Banaue Rice Terraces</a></h3>
-								<p class="location"><span class="fa fa-map-marker"></span> Banaue, Ifugao, Philippines</p>
-								<ul>
-									<li><span class="flaticon-shower"></span>2</li>
-									<li><span class="flaticon-king-size"></span>3</li>
-									<li><span class="flaticon-sun-umbrella"></span>Near Beach</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4 ftco-animate">
-						<div class="project-wrap">
-							<a href="#" class="img" style="background-image: url('{{ asset('clients/images/destination-3.jpg')}}');">
-								<span class="price">$550/person</span>
-							</a>
-							<div class="text p-4">
-								<span class="days">7 Days Tour</span>
-								<h3><a href="#">Banaue Rice Terraces</a></h3>
-								<p class="location"><span class="fa fa-map-marker"></span> Banaue, Ifugao, Philippines</p>
-								<ul>
-									<li><span class="flaticon-shower"></span>2</li>
-									<li><span class="flaticon-king-size"></span>3</li>
-									<li><span class="flaticon-sun-umbrella"></span>Near Beach</li>
-								</ul>
-							</div>
-						</div>
-					</div>
+					<div class="row">
+					@foreach($tourDestinations as $tour)
+<div class="col-md-4 ftco-animate">
+    <div class="project-wrap">
+      <a href="{{ route('tours.show', $tour->slug) }}"
+           class="img"
+           style="background-image: url('{{ Storage::url($tour->thumbnail_path) }}');">
+            <span class="price">
+                {{ number_format($tour->price_adult) }} VND
+            </span>
+        </a>
 
-					<div class="col-md-4 ftco-animate">
-						<div class="project-wrap">
-							<a href="#" class="img" style="background-image: url('{{ asset('clients/images/destination-4.jpg')}}');">
-								<span class="price">$550/person</span>
-							</a>
-							<div class="text p-4">
-								<span class="days">8 Days Tour</span>
-								<h3><a href="#">Banaue Rice Terraces</a></h3>
-								<p class="location"><span class="fa fa-map-marker"></span> Banaue, Ifugao, Philippines</p>
-								<ul>
-									<li><span class="flaticon-shower"></span>2</li>
-									<li><span class="flaticon-king-size"></span>3</li>
-									<li><span class="flaticon-sun-umbrella"></span>Near Beach</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4 ftco-animate">
-						<div class="project-wrap">
-							<a href="#" class="img" style="background-image: url('{{ asset('clients/images/destination-5.jpg')}}');">
-								<span class="price">$550/person</span>
-							</a>
-							<div class="text p-4">
-								<span class="days">10 Days Tour</span>
-								<h3><a href="#">Banaue Rice Terraces</a></h3>
-								<p class="location"><span class="fa fa-map-marker"></span> Banaue, Ifugao, Philippines</p>
-								<ul>
-									<li><span class="flaticon-shower"></span>2</li>
-									<li><span class="flaticon-king-size"></span>3</li>
-									<li><span class="flaticon-sun-umbrella"></span>Near Beach</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4 ftco-animate">
-						<div class="project-wrap">
-							<a href="#" class="img" style="background-image: url('{{ asset('clients/images/destination-6.jpg')}}');">
-								<span class="price">$550/person</span>
-							</a>
-							<div class="text p-4">
-								<span class="days">7 Days Tour</span>
-								<h3><a href="#">Banaue Rice Terraces</a></h3>
-								<p class="location"><span class="fa fa-map-marker"></span> Banaue, Ifugao, Philippines</p>
-								<ul>
-									<li><span class="flaticon-shower"></span>2</li>
-									<li><span class="flaticon-king-size"></span>3</li>
-									<li><span class="flaticon-sun-umbrella"></span>Near Beach</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-		
+        <div class="text p-4">
+            <span class="days">{{ $tour->duration_days }} Days Tour</span>
+           <h3>{{ $tour->tour_name }}</h3>
+
+            <p class="location">
+                <span class="fa fa-map-marker"></span>
+                {{ $tour->destination->name ?? 'Updating' }}
+            </p>
+        </div>
+    </div>
+</div>
+@endforeach
+
+
+			</section>
+			
 		<section class="ftco-section ftco-about img"style="background-image: url('{{ asset('clients/images/bg_4.jpg')}}');">
 			<div class="overlay"></div>
 			<div class="container py-md-5">
