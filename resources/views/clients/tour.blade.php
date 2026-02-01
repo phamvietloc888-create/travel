@@ -17,31 +17,27 @@
                             Home <i class="fa fa-chevron-right"></i>
                         </a>
                     </span>
+                    <span>Tour <i class="fa fa-chevron-right"></i></span>
 
-                    <span>
-                        Tour <i class="fa fa-chevron-right"></i>
-                    </span>
-
-                    @if(isset($destination))
+                    @isset($destination)
                         <span>{{ $destination->name }}</span>
-                    @endif
+                    @endisset
                 </p>
 
                 {{-- TITLE --}}
                 <h1 class="mb-0 bread">
-                    @if(isset($destination))
+                    @isset($destination)
                         Tour {{ $destination->name }}
                     @else
                         Danh sách tour
-                    @endif
+                    @endisset
                 </h1>
 
-                {{-- SUB TITLE --}}
-                @if(isset($destination))
+                @isset($destination)
                     <p class="text-white mt-2">
                         Có {{ $tours->total() }} tour tại {{ $destination->name }}
                     </p>
-                @endif
+                @endisset
 
             </div>
         </div>
@@ -71,7 +67,7 @@
                                 {{ number_format($tour->price_adult) }} VND
                             </span>
 
-                            {{-- LOW SEAT BADGE --}}
+                            {{-- LOW SEAT --}}
                             @if($tour->available_seats <= 5)
                                 <span class="badge badge-danger"
                                       style="position:absolute;top:15px;right:15px;">
@@ -93,21 +89,29 @@
                                 </a>
                             </h3>
 
+                            {{-- DESTINATION --}}
                             <p class="location">
                                 <span class="fa fa-map-marker"></span>
                                 {{ optional($tour->destination)->name ?? 'Đang cập nhật' }}
                             </p>
 
+                            {{-- DEPARTURE --}}
+                            <p class="departure">
+                                <span class="fa fa-plane"></span>
+                                Khởi hành:
+                                 {{ $tour->start_location ?? 'Đang cập nhật' }}
+                            </p>
+
                             {{-- SHORT DESC --}}
                             @if($tour->short_desc)
-                                <p style="font-size:14px;color:#666;">
+                                <p class="tour-desc">
                                     {{ Str::limit($tour->short_desc, 90) }}
                                 </p>
                             @endif
 
                             {{-- FOOTER --}}
                             <div class="d-flex justify-content-between align-items-center mt-3">
-                                <span style="font-size:14px;">
+                                <span class="seat">
                                     👥 Còn {{ $tour->available_seats }} chỗ
                                 </span>
 

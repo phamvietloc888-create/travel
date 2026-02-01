@@ -1,7 +1,9 @@
 @extends('clients.layout')
 
 @section('content')
-
+<style>
+    
+</style>
 
 <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image:  url('{{ asset('clients/images/bg_1.jpg')}}');">
   <div class="overlay"></div>
