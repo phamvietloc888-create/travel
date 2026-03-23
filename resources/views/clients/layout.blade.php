@@ -258,6 +258,9 @@
     {{-- CONTENT --}}
     @yield('content')
 
+    {{-- CHAT WIDGET --}}
+    @include('clients.blocks.chat-widget')
+
     {{-- FOOTER --}}
     @include('clients.blocks.footer')
 
@@ -267,4 +270,3 @@
 </body>
 
 </html>
-

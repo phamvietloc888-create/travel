@@ -36,11 +36,6 @@ class="{{ request()->routeIs('profile.bookings') ? 'active' : '' }}">
 <i class="fa fa-suitcase"></i> Tour đã đặt
 </a>
 
-<a href="{{ route('profile.wishlist') }}"
-class="{{ request()->routeIs('profile.wishlist') ? 'active' : '' }}">
-<i class="fa fa-heart"></i> Danh sách yêu thích
-</a>
-
 <hr>
 
 <form method="POST" action="{{ route('logout') }}">
@@ -111,7 +106,7 @@ class="{{ request()->routeIs('profile.wishlist') ? 'active' : '' }}">
 
 <div class="col-md-6 mb-3">
 <label>Email</label>
-<input value="{{ $user->email }}" readonly>
+<input name="email" value="{{ $user->email }}" readonly>
 </div>
 
 <div class="col-md-6 mb-3">

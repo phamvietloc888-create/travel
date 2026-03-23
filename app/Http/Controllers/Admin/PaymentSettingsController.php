@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\PaymentSetting;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
@@ -13,22 +14,47 @@ class PaymentSettingsController extends Controller
 {
     public function index(): View
     {
-        $settings = PaymentSetting::query()->firstOrCreate(
-            ['id' => 1],
-            [
+        if (! Schema::hasTable('payment_settings')) {
+            $settings = new PaymentSetting([
                 'bank_name' => 'Vietcombank',
                 'account_name' => 'CONG TY DU LICH ABC',
                 'account_number' => '0123456789',
                 'instructions' => 'Chuyển khoản đúng nội dung để hệ thống đối chiếu.',
                 'is_active' => true,
-            ]
-        );
+            ]);
 
-        return view('admin.media.index', ['settings' => $settings]);
+            return view('admin.media.index', [
+                'settings' => $settings,
+                'settingsTableReady' => false,
+            ]);
+        }
+
+        $settings = PaymentSetting::query()->first();
+
+        if (! $settings) {
+            $settings = PaymentSetting::query()->create([
+                'bank_name' => 'Vietcombank',
+                'account_name' => 'CONG TY DU LICH ABC',
+                'account_number' => '0123456789',
+                'instructions' => 'Chuyển khoản đúng nội dung để hệ thống đối chiếu.',
+                'is_active' => true,
+            ]);
+        }
+
+        return view('admin.media.index', [
+            'settings' => $settings,
+            'settingsTableReady' => true,
+        ]);
     }
 
     public function update(Request $request): RedirectResponse
     {
+        if (! Schema::hasTable('payment_settings')) {
+            return back()->withErrors([
+                'payment_settings' => 'Bảng payment_settings chưa được tạo. Hãy chạy migrate trước khi lưu cấu hình thanh toán.',
+            ]);
+        }
+
         $data = $request->validate([
             'bank_name' => ['required', 'string', 'max:255'],
             'account_name' => ['required', 'string', 'max:255'],
@@ -38,12 +64,16 @@ class PaymentSettingsController extends Controller
             'qr_code' => ['nullable', 'image', 'max:4096'],
         ]);
 
-        $settings = PaymentSetting::query()->firstOrCreate(['id' => 1]);
+        $settings = PaymentSetting::query()->first();
+
+        if (! $settings) {
+            $settings = PaymentSetting::query()->create();
+        }
 
         if ($request->hasFile('qr_code')) {
             $newPath = $request->file('qr_code')->store('payment-settings', 'public');
 
-            if (!empty($settings->qr_code_path)) {
+            if (! empty($settings->qr_code_path)) {
                 Storage::disk('public')->delete($settings->qr_code_path);
             }
 

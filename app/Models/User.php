@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -58,8 +59,21 @@ class User extends Authenticatable
         return $this->hasMany(Booking::class);
     }
     public function reviews()
-{
-    return $this->hasMany(\App\Models\Review::class);
-}
+    {
+        return $this->hasMany(\App\Models\Review::class);
+    }
+
+    public function getAvatarUrlAttribute(): ?string
+    {
+        if (empty($this->avatar)) {
+            return null;
+        }
+
+        if (Str::startsWith($this->avatar, ['http://', 'https://', '//'])) {
+            return $this->avatar;
+        }
+
+        return asset(ltrim($this->avatar, '/'));
+    }
 
 }

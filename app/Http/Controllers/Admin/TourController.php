@@ -43,6 +43,7 @@ class TourController extends Controller
         return view('admin.tours.create', [
             'destinations' => $this->destinationService->listAll(),
             'statuses' => Tour::STATUSES,
+            'transportOptions' => Tour::TRANSPORT_OPTIONS,
         ]);
     }
 
@@ -66,6 +67,7 @@ class TourController extends Controller
             'tour' => $tour,
             'destinations' => $this->destinationService->listAll(),
             'statuses' => Tour::STATUSES,
+            'transportOptions' => Tour::TRANSPORT_OPTIONS,
         ]);
     }
 

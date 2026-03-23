@@ -42,6 +42,16 @@ class CheckoutController extends Controller
         $tour = Tour::findOrFail($request->tour_id);
         $adult = max(1, (int) $request->adult);
         $child = max(0, (int) $request->child);
+        $requestedSeats = $adult + $child;
+
+        if ($requestedSeats > $tour->remaining_seats) {
+            return back()
+                ->withErrors([
+                    'adult' => 'So cho con lai khong du cho booking nay. Tour chi con '.$tour->remaining_seats.' cho.',
+                ])
+                ->withInput();
+        }
+
         $total = ($adult * $tour->price_adult) + ($child * ($tour->price_child ?? 0));
 
         $booking = Booking::create([

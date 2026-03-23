@@ -60,6 +60,20 @@
                 <x-admin.input label="Giá trẻ em" name="price_child" type="number" step="1000" value="{{ old('price_child', $tour->price_child) }}" />
                 <x-admin.input label="Số ngày" name="duration_days" type="number" value="{{ old('duration_days', $tour->duration_days) }}" required />
                 <x-admin.input label="Nơi khởi hành" name="start_location" value="{{ old('start_location', $tour->start_location) }}" />
+                <div class="space-y-1">
+                    <label class="label">Phương tiện di chuyển</label>
+                    <select name="transport_type" class="input">
+                        <option value="">Chọn phương tiện</option>
+                        @foreach($transportOptions as $transportOption)
+                            <option value="{{ $transportOption }}" @selected(old('transport_type', $tour->transport_type) === $transportOption)>{{ $transportOption }}</option>
+                        @endforeach
+                    </select>
+                    @error('transport_type')
+                        <p class="text-xs text-red-500">{{ $message }}</p>
+                    @enderror
+                </div>
+                <x-admin.input label="Khách sạn" name="hotel_name" value="{{ old('hotel_name', $tour->hotel_name) }}" />
+                <x-admin.input label="Số sao khách sạn" name="hotel_stars" type="number" min="1" max="5" value="{{ old('hotel_stars', $tour->hotel_stars) }}" />
                 <x-admin.input label="Số người tối đa" name="max_people" type="number" value="{{ old('max_people', $tour->max_people) }}" required />
                 <x-admin.input label="Số chỗ còn" name="available_seats" type="number" value="{{ old('available_seats', $tour->available_seats) }}" required />
             </div>
@@ -225,7 +239,13 @@
 
         input.addEventListener('change', function () {
             const incoming = Array.from(this.files || []);
-            selectedFiles = maxFiles > 0 ? incoming.slice(0, maxFiles) : [];
+            if (maxFiles <= 0) {
+                selectedFiles = [];
+            } else {
+                const remainingSlots = Math.max(0, maxFiles - selectedFiles.length);
+                const nextFiles = incoming.slice(0, remainingSlots);
+                selectedFiles = selectedFiles.concat(nextFiles);
+            }
             syncInputFiles();
             renderPreview();
         });

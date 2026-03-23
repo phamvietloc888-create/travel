@@ -3,25 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 
 class ResetPasswordController extends Controller
 {
-    public function resetDirect(Request $request)
+    public function resetDirect(Request $request): RedirectResponse
     {
-        $request->validate([
-            'email' => 'required|email|exists:users,email',
-            'password' => 'required|min:8|confirmed',
-        ]);
-
-        DB::table('users')
-            ->where('email', $request->email)
-            ->update([
-                'password' => Hash::make($request->password)
-            ]);
-
-        return redirect('/login')->with('success', 'Đổi mật khẩu thành công!');
+        return back()->with('error', 'Chức năng đặt lại mật khẩu trực tiếp đã bị tắt để bảo vệ tài khoản. Vui lòng dùng hỗ trợ trực tuyến để được trợ giúp.');
     }
 }

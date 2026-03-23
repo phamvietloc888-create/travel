@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Clients;
 
 use App\Http\Controllers\Controller;
+use App\Models\Review;
 use App\Support\ImagePathResolver;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class HomeController extends Controller
 {
@@ -78,9 +80,26 @@ class HomeController extends Controller
                 return $destination;
             });
 
+        $userColumns = ['id', 'name'];
+
+        if (Schema::hasColumn('users', 'avatar')) {
+            $userColumns[] = 'avatar';
+        }
+
+        $testimonials = Review::query()
+            ->with([
+                'user:' . implode(',', $userColumns),
+                'tour:id,name',
+            ])
+            ->where('status', 'APPROVED')
+            ->latest()
+            ->limit(8)
+            ->get();
+
         return view('clients.home', compact(
             'tourDestinations',
-            'carouselDestinations'
+            'carouselDestinations',
+            'testimonials'
         ));
     }
 }

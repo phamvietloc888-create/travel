@@ -57,7 +57,7 @@
 						<li><a href="#" class="py-2 d-block">Điều kiện đặt tour</a></li>
 						<li><a href="#" class="py-2 d-block">Chính sách bảo mật</a></li>
 						<li><a href="#" class="py-2 d-block">Chính sách hoàn tiền</a></li>
-						<li><a href="#" class="py-2 d-block">Liên hệ chúng tôi</a></li>
+						<li><a href="{{ route('home') }}" class="py-2 d-block">Hỗ trợ trực tuyến</a></li>
 					</ul>
 				</div>
 			</div>

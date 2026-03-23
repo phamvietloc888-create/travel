@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Support\ImagePathResolver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Support\Str;
 
 class Tour extends Model
@@ -12,6 +13,14 @@ class Tour extends Model
     use HasFactory;
 
     public const STATUSES = ['DRAFT', 'PUBLISHED', 'HIDDEN'];
+    public const TRANSPORT_OPTIONS = [
+        'Xe khách',
+        'Limousine',
+        'Máy bay',
+        'Tàu hỏa',
+        'Tàu thủy',
+        'Ô tô riêng',
+    ];
 
     protected $fillable = [
         'destination_id',
@@ -21,6 +30,9 @@ class Tour extends Model
         'price_child',
         'duration_days',
         'start_location',
+        'transport_type',
+        'hotel_name',
+        'hotel_stars',
         'max_people',
         'available_seats',
         'status',
@@ -33,12 +45,15 @@ class Tour extends Model
         'price_adult' => 'decimal:2',
         'price_child' => 'decimal:2',
         'duration_days' => 'integer',
+        'hotel_stars' => 'integer',
         'max_people' => 'integer',
         'available_seats' => 'integer',
     ];
 
     protected $appends = [
         'thumbnail_url',
+        'booked_seats',
+        'remaining_seats',
     ];
 
     protected static function booted(): void
@@ -75,6 +90,23 @@ class Tour extends Model
         return $this->hasMany(Review::class)
             ->where('status', 'APPROVED')
             ->latest();
+    }
+
+    protected function bookedSeats(): Attribute
+    {
+        return Attribute::get(function (): int {
+            return (int) $this->bookings()
+                ->where('booking_status', '!=', 'CANCELED')
+                ->selectRaw('COALESCE(SUM(adult_qty + child_qty), 0) as seats')
+                ->value('seats');
+        });
+    }
+
+    protected function remainingSeats(): Attribute
+    {
+        return Attribute::get(function (): int {
+            return max(0, (int) $this->available_seats - (int) $this->booked_seats);
+        });
     }
 
     public function getThumbnailUrlAttribute(): string

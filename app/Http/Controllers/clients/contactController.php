@@ -1,81 +1,73 @@
 <?php
 
-namespace App\Http\Controllers\clients;
+namespace App\Http\Controllers\Clients;
 
 use App\Http\Controllers\Controller;
+use App\Models\ChatMessage;
+use App\Models\ChatThread;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+use Illuminate\View\View;
 
-class contactController extends Controller
+class ContactController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request): View
     {
-       return view('clients.contact');
+        $thread = null;
+        $messages = collect();
+
+        if ($user = $request->user()) {
+            $thread = ChatThread::firstOrCreate(
+                ['user_id' => $user->id],
+                [
+                    'status' => 'OPEN',
+                    'last_message_at' => now(),
+                ]
+            );
+
+            $thread->load(['messages.sender']);
+            $messages = $thread->messages->sortBy('created_at')->values();
+        }
+
+        return view('clients.contact', compact('thread', 'messages'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function store(Request $request): RedirectResponse
     {
-        //
-    }
+        $user = $request->user();
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
+        if (! $user) {
+            return redirect()
+                ->route('login')
+                ->with('toast', 'Vui lòng đăng nhập để nhắn tin với hỗ trợ.');
+        }
+
         $data = $request->validate([
-            'name' => ['required', 'string', 'max:120'],
-            'email' => ['required', 'email', 'max:160'],
-            'subject' => ['required', 'string', 'max:160'],
             'message' => ['required', 'string', 'max:3000'],
         ], [
-            'name.required' => 'Vui lòng nhập họ tên.',
-            'email.required' => 'Vui lòng nhập email.',
-            'email.email' => 'Email không hợp lệ.',
-            'subject.required' => 'Vui lòng nhập chủ đề.',
-            'message.required' => 'Vui lòng nhập nội dung liên hệ.',
+            'message.required' => 'Vui lòng nhập nội dung cần hỗ trợ.',
         ]);
 
-        Log::info('Client contact submission', $data);
+        $thread = ChatThread::firstOrCreate(
+            ['user_id' => $user->id],
+            [
+                'status' => 'OPEN',
+                'last_message_at' => now(),
+            ]
+        );
 
-        return back()->with('success', 'Đã gửi liên hệ thành công. Chúng tôi sẽ phản hồi sớm nhất.');
-    }
+        ChatMessage::create([
+            'thread_id' => $thread->id,
+            'sender_type' => 'USER',
+            'sender_user_id' => $user->id,
+            'message' => $data['message'],
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        $thread->update([
+            'status' => 'OPEN',
+            'last_message_at' => now(),
+        ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return back()->with('success', 'Đã gửi tin nhắn. Chúng tôi sẽ phản hồi sớm nhất.');
     }
 }

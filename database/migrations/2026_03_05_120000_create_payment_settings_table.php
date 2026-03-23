@@ -8,16 +8,18 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('payment_settings', function (Blueprint $table) {
-            $table->id();
-            $table->string('bank_name')->nullable();
-            $table->string('account_name')->nullable();
-            $table->string('account_number')->nullable();
-            $table->string('qr_code_path')->nullable();
-            $table->text('instructions')->nullable();
-            $table->boolean('is_active')->default(true);
-            $table->timestamps();
-        });
+        if (! Schema::hasTable('payment_settings')) {
+            Schema::create('payment_settings', function (Blueprint $table) {
+                $table->id();
+                $table->string('bank_name')->nullable();
+                $table->string('account_name')->nullable();
+                $table->string('account_number')->nullable();
+                $table->string('qr_code_path')->nullable();
+                $table->text('instructions')->nullable();
+                $table->boolean('is_active')->default(true);
+                $table->timestamps();
+            });
+        }
     }
 
     public function down(): void

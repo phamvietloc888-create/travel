@@ -11,6 +11,18 @@
         </div>
     </div>
 
+    @if (isset($settingsTableReady) && ! $settingsTableReady)
+        <div class="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+            Bảng <code>payment_settings</code> chưa tồn tại trong cơ sở dữ liệu. Cần chạy migration trước khi lưu cấu hình thanh toán.
+        </div>
+    @endif
+
+    @error('payment_settings')
+        <div class="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+            {{ $message }}
+        </div>
+    @enderror
+
     <form method="POST" action="{{ route('admin.media.update') }}" enctype="multipart/form-data" class="space-y-6">
         @csrf
 
@@ -65,4 +77,3 @@
         </div>
     </form>
 @endsection
-

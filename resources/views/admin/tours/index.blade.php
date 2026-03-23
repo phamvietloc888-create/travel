@@ -42,6 +42,7 @@
                     <th class="px-4 py-3">Điểm đến</th>
                     <th class="px-4 py-3">Giá NL/TE</th>
                     <th class="px-4 py-3">Ngày</th>
+                    <th class="px-4 py-3">Phương tiện</th>
                     <th class="px-4 py-3">Chỗ còn</th>
                     <th class="px-4 py-3">Trạng thái</th>
                     <th class="px-4 py-3 text-right">Thao tác</th>
@@ -64,7 +65,8 @@
                         <td class="px-4 py-3 text-sm">{{ $tour->destination?->name }}</td>
                         <td class="px-4 py-3 text-sm">{{ number_format($tour->price_adult) }} / {{ number_format($tour->price_child) }}</td>
                         <td class="px-4 py-3 text-sm">{{ $tour->duration_days }} ngày</td>
-                        <td class="px-4 py-3 text-sm">{{ $tour->available_seats }}</td>
+                        <td class="px-4 py-3 text-sm">{{ $tour->transport_type ?: 'Đang cập nhật' }}</td>
+                        <td class="px-4 py-3 text-sm">{{ $tour->remaining_seats }}</td>
                         <td class="px-4 py-3">
                             <x-admin.badge :type="$tour->status === 'PUBLISHED' ? 'success' : 'neutral'">
                                 {{ ucfirst(strtolower($tour->status)) }}
@@ -82,7 +84,7 @@
                         </td>
                     </tr>
                 @empty
-                    <tr><td colspan="7" class="px-4 py-8 text-center text-sm text-slate-500">Chưa có tour.</td></tr>
+                    <tr><td colspan="8" class="px-4 py-8 text-center text-sm text-slate-500">Chưa có tour.</td></tr>
                 @endforelse
             </tbody>
         </table>

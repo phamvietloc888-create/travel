@@ -300,7 +300,35 @@
             <div class="row ftco-animate">
                 <div class="col-md-12">
                     <div class="carousel-testimony owl-carousel">
-                        @for($i = 1; $i <= 5; $i++)
+                        @forelse($testimonials as $testimonial)
+                            <div class="item">
+                                <div class="testimony-wrap py-4">
+                                    <div class="text">
+                                        <p class="star">
+                                            @for($star = 1; $star <= 5; $star++)
+                                                <span class="fa fa-star {{ $star <= (int) $testimonial->rating ? '' : 'is-muted' }}"></span>
+                                            @endfor
+                                        </p>
+                                        <p class="mb-4">
+                                            {{ $testimonial->comment ?: 'Khách hàng đã để lại đánh giá tích cực cho hành trình này.' }}
+                                        </p>
+                                        <div class="d-flex align-items-center">
+                                            @if(!empty($testimonial->user?->avatar))
+                                                <div class="user-img" style="background-image: url('{{ $testimonial->user->avatar }}')"></div>
+                                            @else
+                                                <div class="user-img user-img-fallback">
+                                                    {{ \Illuminate\Support\Str::upper(\Illuminate\Support\Str::substr($testimonial->user?->name ?? 'K', 0, 1)) }}
+                                                </div>
+                                            @endif
+                                            <div class="pl-3">
+                                                <p class="name">{{ $testimonial->user?->name ?? 'Khách hàng' }}</p>
+                                                <span class="position">{{ $testimonial->tour?->name ?? 'Đánh giá tour' }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @empty
                             <div class="item">
                                 <div class="testimony-wrap py-4">
                                     <div class="text">
@@ -312,20 +340,19 @@
                                             <span class="fa fa-star"></span>
                                         </p>
                                         <p class="mb-4">
-                                            Rất xa, phía sau những dãy núi ngôn từ, cách xa các miền đất Vokalia và Consonantia,
-                                            có những văn bản thầm lặng sinh sống.
+                                            Chưa có đánh giá nào được hiển thị. Hãy là người đầu tiên chia sẻ trải nghiệm của bạn sau chuyến đi.
                                         </p>
                                         <div class="d-flex align-items-center">
-                                            <div class="user-img" style="background-image: url('{{ asset('clients/images/person_'.$i.'.jpg') }}')"></div>
+                                            <div class="user-img user-img-fallback">L</div>
                                             <div class="pl-3">
-                                                <p class="name">Roger Scott</p>
-                                                <span class="position">Quản lý Marketing</span>
+                                                <p class="name">Lotus Vietnam Travel</p>
+                                                <span class="position">Mời bạn đánh giá sau chuyến đi</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        @endfor
+                        @endforelse
                     </div>
                 </div>
             </div>
@@ -453,6 +480,16 @@
         height: 10px;
     }
 
+    .testimony-section.home-testimony-section {
+        position: relative;
+        background-position: center;
+        background-size: cover;
+    }
+
+    .testimony-section.home-testimony-section .overlay {
+        background: linear-gradient(180deg, rgba(10, 24, 40, 0.74) 0%, rgba(9, 31, 52, 0.62) 100%);
+    }
+
     .testimony-section.home-testimony-section .owl-stage-outer {
         padding: 18px 0 28px;
     }
@@ -462,51 +499,65 @@
     }
 
     .testimony-section.home-testimony-section .testimony-wrap {
-        min-height: 390px;
+        min-height: 320px;
         margin-top: 0;
-        border-radius: 24px;
-        background: var(--home-surface);
-        box-shadow: 0 22px 48px rgba(15, 23, 42, 0.14);
+        border-radius: 26px;
+        background: #ffffff !important;
+        border: 1px solid rgba(226, 232, 240, 0.95);
+        box-shadow: 0 24px 50px rgba(15, 23, 42, 0.16);
+        overflow: hidden;
+    }
+
+    .testimony-section.home-testimony-section .testimony-wrap::before,
+    .testimony-section.home-testimony-section .testimony-wrap::after {
+        content: none !important;
+        display: none !important;
     }
 
     .testimony-section.home-testimony-section .testimony-wrap .text {
         display: flex;
         flex-direction: column;
         height: 100%;
-        padding: 28px 26px 24px;
+        padding: 26px 24px 22px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, #ffffff 100%);
     }
 
     .testimony-section.home-testimony-section .testimony-wrap .star {
-        margin-bottom: 18px;
+        margin-bottom: 16px;
         color: #f5b301;
-        font-size: 20px;
-        letter-spacing: 2px;
+        font-size: 18px;
+        letter-spacing: 1px;
     }
 
     .testimony-section.home-testimony-section .testimony-wrap .mb-4 {
-        margin-bottom: 20px !important;
-        color: var(--home-text);
+        margin-bottom: 18px !important;
+        color: #1f2937;
         font-size: 17px;
-        line-height: 1.8;
+        line-height: 1.75;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        min-height: 7em;
     }
 
     .testimony-section.home-testimony-section .testimony-wrap .d-flex.align-items-center {
         margin-top: auto;
         align-items: center !important;
-        gap: 16px;
-        padding-top: 18px;
+        gap: 14px;
+        padding-top: 16px;
         border-top: 1px solid rgba(15, 23, 42, 0.08);
     }
 
     .testimony-section.home-testimony-section .testimony-wrap .user-img {
-        flex: 0 0 78px;
-        width: 78px;
-        height: 78px;
+        flex: 0 0 64px;
+        width: 64px;
+        height: 64px;
         border-radius: 50%;
         background-size: cover;
         background-position: center;
         background-color: #e5e7eb;
-        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
+        box-shadow: 0 10px 22px rgba(15, 23, 42, 0.10);
     }
 
     .testimony-section.home-testimony-section .testimony-wrap .pl-3 {
@@ -514,16 +565,32 @@
     }
 
     .testimony-section.home-testimony-section .testimony-wrap .name {
-        margin-bottom: 6px;
-        color: var(--home-text);
-        font-size: 18px;
+        margin-bottom: 4px;
+        color: #0f172a;
+        font-size: 17px;
         font-weight: 800;
     }
 
     .testimony-section.home-testimony-section .testimony-wrap .position {
         color: #dc2626;
-        font-size: 15px;
-        font-weight: 600;
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 1.5;
+    }
+
+    .testimony-section.home-testimony-section .star .is-muted {
+        color: rgba(245, 179, 1, 0.28);
+    }
+
+    .testimony-section.home-testimony-section .user-img.user-img-fallback {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+        color: #1d4ed8;
+        font-size: 28px;
+        font-weight: 800;
+        background-image: none !important;
     }
 
     .latest-tour-section .tour-card-grid {
@@ -752,6 +819,8 @@
         .testimony-section.home-testimony-section .testimony-wrap .mb-4 {
             font-size: 15px;
             line-height: 1.7;
+            min-height: auto;
+            -webkit-line-clamp: 5;
         }
     }
 
@@ -807,9 +876,9 @@
         }
 
         .testimony-section.home-testimony-section .testimony-wrap .user-img {
-            width: 60px;
-            height: 60px;
-            flex-basis: 60px;
+            width: 56px;
+            height: 56px;
+            flex-basis: 56px;
         }
     }
 

@@ -71,12 +71,7 @@ class TourController extends Controller
         }
 
         if ($request->filled('start_date')) {
-            $selectedDate = Carbon::parse($request->start_date);
-            $availableDays = [7, 14, 21, 28];
-
-            if (!in_array((int) $selectedDate->day, $availableDays, true)) {
-                $query->whereRaw('1 = 0');
-            }
+            Carbon::parse($request->start_date);
         }
 
         $tours = $query->latest()

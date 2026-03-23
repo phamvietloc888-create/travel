@@ -108,12 +108,18 @@
         <div class="col-md-6 col-lg-4 mb-4">
             <div class="tour-card-grid">
 
-                <a href="{{ route('tours.show', $tour->slug) }}">
-                    <img class="tour-img"
-                         src="{{ $tour->thumbnail_url }}"
-                         alt="{{ $tour->name }}">
-                </a>
-
+                <div class="tour-card-media">
+                    <a href="{{ route('tours.show', $tour->slug) }}">
+                        <img class="tour-img"
+                             src="{{ $tour->thumbnail_url }}"
+                             alt="{{ $tour->name }}">
+                    </a>
+                    @if($tour->remaining_seats <= 0)
+                        <div class="tour-stock-badge is-sold-out">Hết chỗ</div>
+                    @else
+                        <div class="tour-stock-badge">Còn {{ $tour->remaining_seats }} chỗ</div>
+                    @endif
+                </div>
                 <div class="tour-body">
 
                     <h5 class="tour-title-grid">
@@ -121,7 +127,6 @@
                             {{ $tour->name }}
                         </a>
                     </h5>
-
                     {{-- ⭐ ĐÁNH GIÁ --}}
                     <div class="tour-rating mb-2">
                         @php
@@ -154,9 +159,10 @@
                         </div>
 
                         <div>
-                            <i class="fa fa-calendar"></i>
-                            07, 14, 21, 28/03
+                            <i class="fa fa-bus"></i>
+                            Di chuyển: {{ $tour->transport_type ?: 'Đang cập nhật' }}
                         </div>
+
                     </div>
 
                     <div class="tour-footer mt-3">
@@ -164,9 +170,15 @@
                             Giá từ {{ number_format($tour->price_adult) }}đ
                         </div>
 
-                        <a href="{{ route('tours.show', $tour->slug) }}" class="btn-detail-grid">
-                            Xem
-                        </a>
+                        @if($tour->remaining_seats <= 0)
+                            <a href="{{ route('tours.show', $tour->slug) }}" class="btn-detail-grid is-disabled">
+                                Hết chỗ
+                            </a>
+                        @else
+                            <a href="{{ route('tours.show', $tour->slug) }}" class="btn-detail-grid">
+                                Xem
+                            </a>
+                        @endif
                     </div>
 
                 </div>
@@ -257,6 +269,32 @@
 .btn-detail:hover {
     background: #000000;
     color: #fff;
+}
+.tour-card-media {
+    position: relative;
+}
+.tour-stock-badge {
+    display: inline-flex;
+    align-items: center;
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 2;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(232, 247, 238, 0.96);
+    color: #0f7b3b;
+    font-size: 13px;
+    font-weight: 700;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.14);
+}
+.tour-stock-badge.is-sold-out {
+    background: rgba(254, 226, 226, 0.96);
+    color: #b91c1c;
+}
+.btn-detail-grid.is-disabled {
+    background: #9ca3af;
+    pointer-events: none;
 }
 
 /* ===== SIDEBAR FULL SIZE ===== */

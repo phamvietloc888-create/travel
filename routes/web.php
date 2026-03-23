@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
-Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+Route::get('/contact', fn () => redirect()->route('home'))->name('contact');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.submit');
 
 Route::get('/payment-settings/qr', [CheckoutController::class, 'paymentQr'])->name('payment.qr');
@@ -26,11 +26,11 @@ Route::get('/tours', [TourController::class, 'index'])->name('tours.index');
 Route::get('/tours/destination/{slug}', [TourController::class, 'byDestination'])->name('tours.byDestination');
 Route::get('/tours/{slug}', [TourController::class, 'show'])->name('tours.show');
 
-Route::view('/login', 'auth.login')->name('login');
+Route::get('/login', fn () => redirect()->route('home', ['auth' => 'login']))->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
-Route::view('/register', 'auth.register')->name('register');
+Route::get('/register', fn () => redirect()->route('home', ['auth' => 'register']))->name('register');
 Route::post('/register', [AuthController::class, 'register'])->name('register.submit');
-Route::view('/forgot-password', 'auth.forgot-password')->name('password.request');
+Route::get('/forgot-password', fn () => redirect()->route('home', ['auth' => 'forgot']))->name('password.request');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware('auth')->group(function () {

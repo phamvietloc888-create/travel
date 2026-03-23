@@ -58,7 +58,9 @@ class ProfileController extends Controller
 
     public function wishlist()
     {
-        return view('profile.user', $this->profilePayload());
+        return redirect()
+            ->route('profile.bookings')
+            ->with('error', 'Danh sách yêu thích chưa được bật. Bạn xem tạm các tour đã đặt giúp mình nhé.');
     }
 
     public function cancelBooking(Booking $booking)
@@ -115,10 +117,11 @@ class ProfileController extends Controller
             'email' => 'required|email|max:255|unique:users,email,' . auth()->id(),
             'phone' => 'nullable|string|max:20',
             'address' => 'nullable|string|max:255',
+            'birthday' => 'nullable|date|before:today',
         ]);
 
         auth()->user()->update(
-            $request->only('name', 'email', 'phone', 'address')
+            $request->only('name', 'email', 'phone', 'address', 'birthday')
         );
 
         return back()->with('success', 'Cập nhật hồ sơ thành công');

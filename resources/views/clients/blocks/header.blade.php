@@ -104,7 +104,6 @@
                 <li class="nav-item {{ request()->routeIs('about') ? 'active' : '' }}"><a href="{{ route('about') }}" class="nav-link">Giới thiệu</a></li>
                 <li class="nav-item {{ request()->routeIs('destinations.index') ? 'active' : '' }}"><a href="{{ route('destinations.index') }}" class="nav-link">Điểm đến</a></li>
                 <li class="nav-item {{ request()->routeIs('tours.index') ? 'active' : '' }}"><a href="{{ route('tours.index') }}" class="nav-link">Tours</a></li>
-                <li class="nav-item {{ request()->routeIs('contact') ? 'active' : '' }}"><a href="{{ route('contact') }}" class="nav-link">Liên hệ</a></li>
             </ul>
         </div>
     </div>
@@ -322,25 +321,17 @@
                 <div id="forgotForm" class="auth-form">
                     <div class="form-header">
                         <h4>Quên mật khẩu?</h4>
-                        <p>Nhập email và tạo mật khẩu mới</p>
+                        <p>Nếu bạn cần lấy lại mật khẩu, hãy liên hệ quản trị viên để được cấp lại an toàn.</p>
                     </div>
-                    <form method="POST" action="{{ route('password.direct') }}">
-                        @csrf
-                        <div class="input-group">
-                            <div class="input-wrapper"><i class="fa fa-envelope input-icon-left"></i><input type="email" name="email" placeholder="Nhập email của bạn" required></div>
-                            <small class="input-note">Nhập email đã liên kết với tài khoản</small>
+                    <div class="input-group">
+                        <div class="input-wrapper">
+                            <i class="fa fa-shield input-icon-left"></i>
+                            <input type="text" value="Liên hệ quản trị viên để lấy lại mật khẩu" readonly>
                         </div>
-                        <div class="input-group">
-                            <div class="input-wrapper"><i class="fa fa-lock input-icon-left"></i><input type="password" name="password" class="password-field" placeholder="Mật khẩu mới" required><button type="button" class="toggle-password"><i class="fa fa-eye"></i></button></div>
-                            <small class="input-note">Chọn mật khẩu mạnh, tối thiểu 8 ký tự</small>
-                        </div>
-                        <div class="input-group">
-                            <div class="input-wrapper"><i class="fa fa-lock input-icon-left"></i><input type="password" name="password_confirmation" class="password-field" placeholder="Xác nhận mật khẩu mới" required><button type="button" class="toggle-password"><i class="fa fa-eye"></i></button></div>
-                            <small class="input-note">Phải trùng với mật khẩu mới</small>
-                        </div>
-                        <button type="submit" class="main-btn">Đặt lại mật khẩu</button>
-                        <div class="text-center mt-3"><a href="#" onclick="switchTab('login')">← Quay lại đăng nhập</a></div>
-                    </form>
+                        <small class="input-note">Hiện tại tính năng chat cần đăng nhập, nên nếu quên mật khẩu bạn hãy liên hệ admin hoặc hotline để được hỗ trợ.</small>
+                    </div>
+                    <button type="button" class="main-btn" data-dismiss="modal">Đã hiểu</button>
+                    <div class="text-center mt-3"><a href="#" onclick="switchTab('login')">← Quay lại đăng nhập</a></div>
                 </div>
             </div>
         </div>
@@ -387,6 +378,7 @@ $(document).ready(function () {
     const loginEmail = document.getElementById('loginEmail');
     const loginRemember = document.getElementById('loginRemember');
     const clearLoginEmailBtn = document.querySelector('.clear-input-btn[data-target="loginEmail"]');
+    const authParam = new URLSearchParams(window.location.search).get('auth');
 
     function syncClearButton(input, button) {
         if (!input || !button) return;
@@ -420,6 +412,14 @@ $(document).ready(function () {
         }
         syncClearButton(loginEmail, clearLoginEmailBtn);
     });
+
+    if (authParam && ['login', 'register', 'forgot'].includes(authParam)) {
+        switchTab(authParam);
+        $('#authModal').modal('show');
+
+        const cleanUrl = window.location.pathname + window.location.hash;
+        window.history.replaceState({}, document.title, cleanUrl);
+    }
 
     $('.nav-user-trigger').on('click', function (event) {
         event.preventDefault();
