@@ -26,7 +26,6 @@
             ['label' => 'Khuyến mãi', 'route' => 'admin.promotions.index', 'icon' => 'M4 7h16M4 12h10M4 17h7'],
             ['label' => 'Đánh giá', 'route' => 'admin.reviews.index', 'icon' => 'M4 6h16M4 12h16M4 18h10'],
             ['label' => 'Tin nhắn', 'route' => 'admin.chats.index', 'icon' => 'M21 14a2 2 0 01-2 2H8l-5 4V6a2 2 0 012-2h14a2 2 0 012 2z'],
-            ['label' => 'Lịch sử', 'route' => 'admin.histories.index', 'icon' => 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'],
             ['label' => 'Thanh toán', 'route' => 'admin.media.index', 'icon' => 'M4 7v10a2 2 0 002 2h12a2 2 0 002-2V7l-4 2-4-2-4 2-4-2z'],
         ];
     @endphp

@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\PromotionController;
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\ChatController;
 use App\Http\Controllers\Admin\HistoryController;
+use App\Http\Controllers\Admin\SearchController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'admin'])
@@ -16,6 +17,7 @@ Route::middleware(['auth', 'admin'])
     ->prefix('admin')
     ->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('search', [SearchController::class, 'index'])->name('search');
 
         Route::resource('destinations', DestinationController::class);
         Route::delete('tours/{tour}/images/{image}', [TourController::class, 'destroyImage'])->name('tours.images.destroy');

@@ -11,18 +11,23 @@
             <p class="truncate text-xs text-slate-500 dark:text-slate-400">Không gian quản trị Travel</p>
         </div>
 
-        <div class="relative hidden flex-1 max-w-md md:block">
+        <form method="GET" action="{{ route('admin.search') }}" class="relative hidden max-w-md flex-1 md:block">
             <input
-                type="text"
+                type="search"
+                name="q"
+                value="{{ request('q') }}"
                 placeholder="Tìm tour, booking, điểm đến..."
-                class="input pl-10"
+                class="input pl-10 pr-24"
             />
             <span class="absolute left-3 top-2.5 text-slate-400">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.2-4.2m0 0A7.3 7.3 0 105.6 5.6a7.3 7.3 0 0011.2 11.2z" />
                 </svg>
             </span>
-        </div>
+            <button type="submit" class="absolute right-2 top-1.5 rounded-xl bg-sky-500 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-sky-600">
+                Tìm
+            </button>
+        </form>
 
         <div class="ml-auto flex items-center gap-2">
             <button class="btn-ghost" @click="Alpine.store('ui').toggleTheme()" title="Đổi giao diện">

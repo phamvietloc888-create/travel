@@ -10,7 +10,11 @@ use App\Http\Controllers\Clients\HomeController;
 use App\Http\Controllers\Clients\ProfileController;
 use App\Http\Controllers\Clients\ReviewController;
 use App\Http\Controllers\Clients\TourController;
+use App\Http\Controllers\SitemapController;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/sitemap', [SitemapController::class, 'index'])->name('sitemap.index');
+Route::get('/sitemap.xml', [SitemapController::class, 'xml'])->name('sitemap.xml');
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
