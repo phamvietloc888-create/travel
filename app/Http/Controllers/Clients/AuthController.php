@@ -43,6 +43,14 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:8|confirmed',
+        ], [
+            'name.required' => 'Vui long nhap ho va ten.',
+            'email.required' => 'Vui long nhap email.',
+            'email.email' => 'Email khong dung dinh dang.',
+            'email.unique' => 'Email nay da ton tai. Vui long dung email khac hoac dang nhap.',
+            'password.required' => 'Vui long nhap mat khau.',
+            'password.min' => 'Mat khau phai co it nhat 8 ky tu.',
+            'password.confirmed' => 'Xac nhan mat khau khong khop.',
         ]);
 
         User::create([

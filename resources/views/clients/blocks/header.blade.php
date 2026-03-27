@@ -30,6 +30,12 @@
         @endphp
     @endauth
 
+    @php
+        $authErrorBag = $errors;
+        $hasRegisterError = old('name') || $authErrorBag->hasAny(['name', 'password', 'password_confirmation']) || ($authErrorBag->has('email') && old('name'));
+        $hasLoginError = session('error') || ($authErrorBag->has('email') && ! $hasRegisterError) || ($authErrorBag->has('password') && ! $hasRegisterError);
+    @endphp
+
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
         <div class="container-fluid navbar-mobile">
             <button class="navbar-toggler order-first" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Mở menu">
@@ -144,12 +150,18 @@
     .input-wrapper.has-clear input { padding-right: 82px; }
     .input-wrapper input::placeholder { color: #94a3b8; }
     .input-wrapper input:focus { outline: none; border-color: #111827; box-shadow: 0 0 0 4px rgba(17, 24, 39, 0.08); }
+    .input-wrapper input.is-invalid { border-color: #dc2626; box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.08); }
     .input-icon-left { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #8ba0b5; }
     .toggle-password { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); border: 0; background: transparent; color: #8ba0b5; }
     .clear-input-btn { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); width: 26px; height: 26px; border: 0; border-radius: 999px; background: #e5e7eb; color: #475569; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; line-height: 1; cursor: pointer; opacity: 0; pointer-events: none; transition: opacity .2s ease, background-color .2s ease, color .2s ease; }
     .clear-input-btn.is-visible { opacity: 1; pointer-events: auto; }
     .clear-input-btn:hover { background: #111827; color: #fff; }
     .input-note { display: block; margin-top: 8px; color: #8aa; font-size: 12px; }
+    .form-alert { margin-bottom: 16px; padding: 12px 14px; border-radius: 14px; font-size: 14px; font-weight: 600; }
+    .form-alert.is-error { background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; }
+    .input-error { display: block; margin-top: 8px; color: #dc2626; font-size: 12px; font-weight: 600; }
+    .form-alert { margin-bottom: 16px; padding: 12px 14px; border-radius: 14px; font-size: 14px; font-weight: 600; }
+    .form-alert.is-error { background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; }
     .form-options { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 18px; font-size: 14px; }
     .form-options label, .form-options a, .text-center a { color: #111827; }
     .main-btn { width: 100%; min-height: 52px; border-radius: 14px; border: 0; background: #111827; color: #fff; font-weight: 700; }
@@ -263,6 +275,9 @@
                             <h4>Chào mừng quay lại</h4>
                             <p>Đăng nhập để tiếp tục hành trình của bạn</p>
                         </div>
+                        @if(session('error'))
+                            <div class="form-alert is-error">{{ session('error') }}</div>
+                        @endif
                         <form method="POST" action="/login" id="loginModalForm" autocomplete="on">
                             @csrf
                             <div class="input-group">
@@ -297,6 +312,11 @@
                             <h4>Tạo tài khoản</h4>
                             <p>Đăng ký để khám phá cùng Lotus Vietnam Travel</p>
                         </div>
+                        @if($hasRegisterError)
+                            <div class="form-alert is-error">
+                                {{ $errors->first('email') ?: $errors->first('name') ?: $errors->first('password') ?: $errors->first('password_confirmation') }}
+                            </div>
+                        @endif
                         <form method="POST" action="/register">
                             @csrf
                             <div class="input-group">
@@ -379,6 +399,8 @@
         const loginRemember = document.getElementById('loginRemember');
         const clearLoginEmailBtn = document.querySelector('.clear-input-btn[data-target="loginEmail"]');
         const authParam = new URLSearchParams(window.location.search).get('auth');
+        const shouldOpenLogin = @json((bool) $hasLoginError);
+        const shouldOpenRegister = @json((bool) $hasRegisterError);
 
         function syncClearButton(input, button) {
             if (!input || !button) return;
@@ -413,7 +435,13 @@
             syncClearButton(loginEmail, clearLoginEmailBtn);
         });
 
-        if (authParam && ['login', 'register', 'forgot'].includes(authParam)) {
+        if (shouldOpenRegister) {
+            switchTab('register');
+            $('#authModal').modal('show');
+        } else if (shouldOpenLogin) {
+            switchTab('login');
+            $('#authModal').modal('show');
+        } else if (authParam && ['login', 'register', 'forgot'].includes(authParam)) {
             switchTab(authParam);
             $('#authModal').modal('show');
 
