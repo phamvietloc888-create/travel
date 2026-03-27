@@ -148,14 +148,15 @@
     .form-header h4 { margin-bottom: 6px; color: #22364d; font-weight: 800; }
     .form-header p { margin-bottom: 20px; color: #7a8a9c; }
     .input-group { margin-bottom: 16px; display: block; }
-    .input-wrapper { position: relative; display: block; z-index: 1; }
-    .input-wrapper input { position: relative; z-index: 2; width: 100%; min-height: 52px; border-radius: 14px; border: 1px solid #d6e1ec; background: #fff; color: #22364d; padding: 0 44px 0 42px; pointer-events: auto; }
+    .input-wrapper { position: relative; display: block; z-index: 1; overflow: visible; isolation: isolate; }
+    .input-wrapper input { position: relative; z-index: 2; width: 100%; min-height: 52px; border-radius: 14px; border: 1px solid #d6e1ec; background: #fff; color: #22364d; padding: 0 44px 0 42px; pointer-events: auto; touch-action: manipulation; -webkit-user-select: text; user-select: text; }
+    .input-wrapper.password-wrapper input { padding-right: 56px; }
     .input-wrapper.has-clear input { padding-right: 82px; }
     .input-wrapper input::placeholder { color: #94a3b8; }
     .input-wrapper input:focus { outline: none; border-color: #111827; box-shadow: 0 0 0 4px rgba(17, 24, 39, 0.08); }
     .input-wrapper input.is-invalid { border-color: #dc2626; box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.08); }
     .input-icon-left { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #8ba0b5; pointer-events: none; z-index: 3; }
-    .toggle-password { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); border: 0; background: transparent; color: #8ba0b5; z-index: 4; width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; }
+    .toggle-password { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); border: 0; background: transparent; color: #8ba0b5; z-index: 4; width: 28px; height: 28px; min-width: 28px; min-height: 28px; margin: 0; padding: 0; display: inline-flex; align-items: center; justify-content: center; pointer-events: auto; -webkit-appearance: none; appearance: none; box-shadow: none; }
     .clear-input-btn { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); width: 26px; height: 26px; border: 0; border-radius: 999px; background: #e5e7eb; color: #475569; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; line-height: 1; cursor: pointer; opacity: 0; pointer-events: none; transition: opacity .2s ease, background-color .2s ease, color .2s ease; }
     .clear-input-btn.is-visible { opacity: 1; pointer-events: auto; }
     .clear-input-btn:hover { background: #111827; color: #fff; }
@@ -186,6 +187,19 @@
     }
 
     @media (max-width: 767.98px) {
+        #authModal {
+            padding-left: 12px !important;
+            padding-right: 12px !important;
+        }
+
+        #authModal .modal-dialog {
+            margin: 72px auto 16px;
+            max-width: 100%;
+            min-height: calc(100vh - 88px);
+            display: flex;
+            align-items: flex-start;
+        }
+
         .navbar-mobile {
             padding-left: 12px;
             padding-right: 12px;
@@ -234,6 +248,21 @@
 
         .login-modal .modal-body {
             padding: 22px 18px;
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .input-wrapper.password-wrapper input {
+            padding-right: 52px;
+        }
+
+        .toggle-password {
+            right: 10px;
+            width: 24px;
+            height: 24px;
+            min-width: 24px;
+            min-height: 24px;
         }
 
         .auth-tabs {
@@ -247,6 +276,11 @@
     }
 
     @media (max-width: 420px) {
+        #authModal .modal-dialog {
+            margin-top: 64px;
+            min-height: calc(100vh - 80px);
+        }
+
         .navbar-brand.navbar-brand-center {
             font-size: 18px !important;
         }
