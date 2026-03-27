@@ -253,16 +253,16 @@
             -webkit-overflow-scrolling: touch;
         }
 
+        .login-modal {
+            overflow: hidden;
+        }
+
         .input-wrapper.password-wrapper input {
-            padding-right: 52px;
+            padding-right: 42px;
         }
 
         .toggle-password {
-            right: 10px;
-            width: 24px;
-            height: 24px;
-            min-width: 24px;
-            min-height: 24px;
+            display: none !important;
         }
 
         .auth-tabs {
