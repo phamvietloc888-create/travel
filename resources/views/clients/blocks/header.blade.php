@@ -133,8 +133,11 @@
     .nav-notice-tour { font-weight: 700; color: #18314f; }
     .nav-notice-text { font-size: 13px; color: #6d7f95; }
     .nav-notice-empty { color: #7f8fa4; font-size: 13px; }
-    .login-modal { border-radius: 24px; border: 0; box-shadow: 0 24px 60px rgba(15, 23, 42, 0.18); background: #ffffff; color: #0f172a; overflow: visible; }
-    .login-modal .modal-body { padding: 28px; position: relative; background: transparent; }
+    #authModal { z-index: 2000; }
+    #authModal .modal-dialog { z-index: 2001; pointer-events: auto; }
+    .modal-backdrop.show { z-index: 1990; }
+    .login-modal { position: relative; z-index: 2002; border-radius: 24px; border: 0; box-shadow: 0 24px 60px rgba(15, 23, 42, 0.18); background: #ffffff; color: #0f172a; overflow: visible; }
+    .login-modal .modal-body { padding: 28px; position: relative; z-index: 2; background: transparent; }
     .close-btn { position: absolute; right: -12px; top: -12px; width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid #d7e3ef; border-radius: 999px; background: #fff; font-size: 22px; line-height: 1; color: #73869d; box-shadow: 0 14px 30px rgba(15, 23, 42, 0.14); z-index: 5; transition: all 0.2s ease; }
     .close-btn:hover { background: #f5f9fd; color: #18314f; border-color: #bfd3e6; }
     .auth-tabs { display: flex; gap: 10px; margin-bottom: 20px; padding-right: 48px; }
@@ -145,14 +148,14 @@
     .form-header h4 { margin-bottom: 6px; color: #22364d; font-weight: 800; }
     .form-header p { margin-bottom: 20px; color: #7a8a9c; }
     .input-group { margin-bottom: 16px; display: block; }
-    .input-wrapper { position: relative; display: block; }
-    .input-wrapper input { width: 100%; min-height: 52px; border-radius: 14px; border: 1px solid #d6e1ec; background: #fff; color: #22364d; padding: 0 44px 0 42px; }
+    .input-wrapper { position: relative; display: block; z-index: 1; }
+    .input-wrapper input { position: relative; z-index: 2; width: 100%; min-height: 52px; border-radius: 14px; border: 1px solid #d6e1ec; background: #fff; color: #22364d; padding: 0 44px 0 42px; pointer-events: auto; }
     .input-wrapper.has-clear input { padding-right: 82px; }
     .input-wrapper input::placeholder { color: #94a3b8; }
     .input-wrapper input:focus { outline: none; border-color: #111827; box-shadow: 0 0 0 4px rgba(17, 24, 39, 0.08); }
     .input-wrapper input.is-invalid { border-color: #dc2626; box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.08); }
-    .input-icon-left { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #8ba0b5; }
-    .toggle-password { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); border: 0; background: transparent; color: #8ba0b5; }
+    .input-icon-left { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #8ba0b5; pointer-events: none; z-index: 3; }
+    .toggle-password { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); border: 0; background: transparent; color: #8ba0b5; z-index: 4; width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; }
     .clear-input-btn { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); width: 26px; height: 26px; border: 0; border-radius: 999px; background: #e5e7eb; color: #475569; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; line-height: 1; cursor: pointer; opacity: 0; pointer-events: none; transition: opacity .2s ease, background-color .2s ease, color .2s ease; }
     .clear-input-btn.is-visible { opacity: 1; pointer-events: auto; }
     .clear-input-btn:hover { background: #111827; color: #fff; }
@@ -171,6 +174,7 @@
     .social-btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; border-radius: 14px; border: 1px solid #d6e1ec; color: #22364d; font-weight: 700; background: #fff; }
     .social-btn img { width: 18px; height: 18px; object-fit: contain; }
     .social-btn:hover { background: #f8fafc; color: #111827; }
+    body.auth-modal-open .site-chat-widget { opacity: 0; pointer-events: none; visibility: hidden; }
     @keyframes bellRing { 0%,100% { transform: rotate(0); } 10% { transform: rotate(18deg); } 20% { transform: rotate(-16deg); } 30% { transform: rotate(12deg); } 40% { transform: rotate(-8deg); } 50% { transform: rotate(0); } }
     @keyframes bellPulse { 0%,100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.18); } 50% { box-shadow: 0 0 0 12px rgba(239, 68, 68, 0); } }
     @keyframes floatNotice { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
@@ -419,7 +423,12 @@
             });
         }
 
+        $('#authModal').on('show.bs.modal', function () {
+            document.body.classList.add('auth-modal-open');
+        });
+
         $('#authModal').on('hidden.bs.modal', function () {
+            document.body.classList.remove('auth-modal-open');
             const passwordFields = this.querySelectorAll('.password-field');
             passwordFields.forEach((input) => {
                 input.value = '';
