@@ -156,7 +156,7 @@
     .input-wrapper input:focus { outline: none; border-color: #111827; box-shadow: 0 0 0 4px rgba(17, 24, 39, 0.08); }
     .input-wrapper input.is-invalid { border-color: #dc2626; box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.08); }
     .input-icon-left { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #8ba0b5; pointer-events: none; z-index: 3; }
-    .toggle-password { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); border: 0; background: transparent; color: #8ba0b5; z-index: 4; width: 28px; height: 28px; min-width: 28px; min-height: 28px; margin: 0; padding: 0; display: inline-flex; align-items: center; justify-content: center; pointer-events: auto; -webkit-appearance: none; appearance: none; box-shadow: none; }
+    .toggle-password { display: none !important; }
     .clear-input-btn { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); width: 26px; height: 26px; border: 0; border-radius: 999px; background: #e5e7eb; color: #475569; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; line-height: 1; cursor: pointer; opacity: 0; pointer-events: none; transition: opacity .2s ease, background-color .2s ease, color .2s ease; }
     .clear-input-btn.is-visible { opacity: 1; pointer-events: auto; }
     .clear-input-btn:hover { background: #111827; color: #fff; }
