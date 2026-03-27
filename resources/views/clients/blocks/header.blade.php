@@ -268,6 +268,8 @@
             height: 24px;
             min-width: 24px;
             min-height: 24px;
+            pointer-events: none;
+            opacity: 0.8;
         }
 
         .auth-tabs {
