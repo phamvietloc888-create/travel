@@ -418,11 +418,56 @@
         const icon = button.querySelector('i');
         if (input.type === 'password') {
             input.type = 'text';
+            input.dataset.manualVisible = 'true';
             icon.classList.replace('fa-eye', 'fa-eye-slash');
         } else {
             input.type = 'password';
+            delete input.dataset.manualVisible;
+            delete input.dataset.mobileReveal;
             icon.classList.replace('fa-eye-slash', 'fa-eye');
         }
+    });
+
+    document.addEventListener('focusin', function (event) {
+        const input = event.target.closest('.password-field');
+        if (!input) return;
+
+        const isSmallTouchDevice = window.matchMedia('(max-width: 767.98px)').matches;
+        if (!isSmallTouchDevice) return;
+
+        // iOS/Safari can fail to start typing on password fields inside animated modals.
+        // Briefly switching to text on focus stabilizes the keyboard, then we restore masking.
+        if (input.type === 'password' && !input.dataset.manualVisible) {
+            input.type = 'text';
+            input.dataset.mobileReveal = 'true';
+
+            const toggleIcon = input.parentElement.querySelector('.toggle-password i');
+            if (toggleIcon) {
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            }
+
+            setTimeout(() => {
+                if (document.activeElement === input && input.dataset.mobileReveal === 'true') {
+                    input.type = 'password';
+                    delete input.dataset.mobileReveal;
+                    if (toggleIcon && !input.dataset.manualVisible) {
+                        toggleIcon.classList.remove('fa-eye-slash');
+                        toggleIcon.classList.add('fa-eye');
+                    }
+                }
+            }, 150);
+        }
+    });
+
+    document.addEventListener('pointerdown', function (event) {
+        const wrapper = event.target.closest('.input-wrapper');
+        if (!wrapper || event.target.closest('.toggle-password') || event.target.matches('input')) return;
+
+        const input = wrapper.querySelector('input');
+        if (!input) return;
+
+        setTimeout(() => input.focus(), 0);
     });
 
     function switchTab(tab) {
