@@ -21,7 +21,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
-Route::get('/contact', fn () => redirect()->route('home'))->name('contact');
+Route::view('/privacy-policy', 'clients.privacy-policy')->name('privacy-policy');
+Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.submit');
 
 Route::get('/payment-settings/qr', [CheckoutController::class, 'paymentQr'])->name('payment.qr');

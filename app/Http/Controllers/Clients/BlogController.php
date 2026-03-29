@@ -146,6 +146,103 @@ class BlogController extends Controller
                     ],
                 ],
             ],
+            [
+                'slug' => 'review-lotus-train-ha-noi-da-nang',
+                'title' => 'Review Lotus Train tu Ha Noi den Da Nang: trai nghiem cabin, wifi va giac ngu tren tau',
+                'category' => 'Review Lotus Train',
+                'published_at' => '2026-03-29',
+                'read_time' => '10 phut doc',
+                'image' => asset('clients/images/bg_2.jpg'),
+                'sections' => [
+                    [
+                        'heading' => 'Vi sao nhieu nguoi quan tam Lotus Train',
+                        'paragraphs' => [
+                            'Lotus Train thu hut su chu y vi danh vao trai nghiem thoai mai hon so voi ky vong thong thuong khi di tau du lich duong dai. Nguoi doc thuong muon biet cabin co sach khong, giuong nam co em khong, dieu hoa co on dinh khong va wifi co dung duoc khong. Day deu la cac cau hoi rat thuc te ma mot bai review nen tra loi ro.',
+                            'Khi viet bai review dang nay, gia tri lon nhat khong nam o viec khen hay che mot chieu, ma nam o su can bang. Nguoi doc can biet nhung diem phu hop voi minh va nhung diem co the bat tien. Chinh kieu noi dung minh bach do moi giup website xay dung uy tin lau dai.',
+                            'Neu website co nhieu bai review hanh trinh nhu vay, Google cung de hieu rang day la noi dung co ich cho nguoi dang tim thong tin, khong chi la trang ban tour don thuan.',
+                        ],
+                    ],
+                    [
+                        'heading' => 'Trai nghiem cabin, tien nghi va khong gian',
+                        'paragraphs' => [
+                            'Mot trong nhung phan duoc quan tam nhat la cabin. Nguoi di tau du lich duong dai thuong ky vong khong gian gon gang, giuong sach, chan ga on va co cho de hanh ly hop ly. Neu cabin duoc giu ve sinh tot, anh sang vua phai va it tieng on tu hanh lang, trai nghiem tong the se tang len ro ret.',
+                            'Wifi tren cac hanh trinh dai thuong khong nen duoc ky vong qua muc. Cach viet dung la thong bao ro luc nao ket noi on, luc nao yeu, va ai nen xem wifi chi la tien ich phu tro. Nguoi doc danh gia cao nhung bai viet noi that nhu vay hon la mot bai review qua dep nhung khong sat thuc te.',
+                            'Ngoai cabin, nen bo sung thong tin ve nha ve sinh, khu vuc hanh lang, o cam sac, dieu hoa va thai do phuc vu. Day la nhung chi tiet lam nen authority cho noi dung review.',
+                        ],
+                    ],
+                    [
+                        'heading' => 'FAQ nho cho nguoi dang can dat cho',
+                        'paragraphs' => [
+                            'Cau hoi thuong gap thu nhat la co nen di tau du lich cho chang dai hay khong. Cau tra loi phu thuoc vao uu tien cua tung nguoi. Neu ban muon ngam canh, thich di chuyen thong tha va khong qua gap ve thoi gian, tau la lua chon dang can nhac.',
+                            'Cau hoi thu hai la co phu hop voi gia dinh hay cap doi khong. Neu website co bai viet chi ro uu diem va han che cho tung nhom khach, muc do huu ich se tang rat nhanh. Day cung la cach de bien blog thanh tai san noi dung that su.',
+                            'Ket lai, bai review Lotus Train nen huong den viec giup nguoi doc ra quyet dinh, khong nen dung lai o mo ta hinh anh chung chung. Chinh su cu the moi giup bai viet co gia tri ve SEO va AdSense.',
+                        ],
+                    ],
+                ],
+            ],
+            [
+                'slug' => 'gia-ve-lotus-train-kinh-nghiem-xem-chi-phi',
+                'title' => 'Gia ve Lotus Train va cach uoc tinh tong chi phi cho mot chuyen di duong dai',
+                'category' => 'Gia ve va chi phi',
+                'published_at' => '2026-03-29',
+                'read_time' => '8 phut doc',
+                'image' => asset('clients/images/bg_3.jpg'),
+                'sections' => [
+                    [
+                        'heading' => 'Khong nen chi nhin vao gia ve niem yet',
+                        'paragraphs' => [
+                            'Khi tim thong tin gia ve, nhieu nguoi chi quan tam mot con so dau tien roi so sanh ngay. Thuc te, tong chi phi chuyen di thuong con bao gom phi dua don, bua an, nuoc uong, luu tru truoc hoac sau chang tau va cac khoan phat sinh nho. Mot bai viet huu ich nen giup nguoi doc nhin tong chi phi thay vi chi mot muc gia.',
+                            'Neu khong the cap nhat bang gia theo thoi gian thuc, bai viet van co gia tri neu trinh bay cach tu tinh ngan sach. Vi du, co the huong dan nguoi doc tach chi phi thanh 3 nhom: di chuyen, luu tru va tieu dung phat sinh. Cach trinh bay nay ben vung hon va it gay hieu nham.',
+                        ],
+                    ],
+                    [
+                        'heading' => 'Yeu to lam gia tri thay doi',
+                        'paragraphs' => [
+                            'Gia ve co the khac nhau theo loai cabin, thoi diem dat, ngay trong tuan va mua du lich. Mua cao diem, cuoi tuan hoac dip nghi le thuong co muc gia cao hon. Vi vay, bai viet dang authority nen tap trung vao logic bien dong gia thay vi dua ra mot con so co dinh de roi nhanh chong lac hau.',
+                            'Ngoai ra, mot so nguoi uu tien trai nghiem em, yen tinh va muon ngu nghi tot. Khi do, ho san sang tra cao hon de doi lay su thoai mai. Nguoi khac chi can di chuyen hop ly va tiet kiem. Website se huu ich hon neu chi ro moi muc chi phi phu hop voi kieu khach nao.',
+                            'Noi dung dang nay rat hop cho AdSense vi no giai dap mot truy van tim kiem rat ro: gia ve va chi phi can chuan bi. Neu viet ky, bai se co kha nang thu hut traffic tot.',
+                        ],
+                    ],
+                    [
+                        'heading' => 'Mau huong dan ngan sach de nguoi doc tu ap dung',
+                        'paragraphs' => [
+                            'Ban co the goi y mot khung don gian: dau tien xac dinh loai cho muon dat, sau do cong them di chuyen dau den, bua an trong hanh trinh, chi phi luu tru va mot khoan du phong. Cach tinh tung buoc nhu vay de doc, de lam theo va an toan hon viec cam ket mot muc gia chung cho moi truong hop.',
+                            'Neu co dieu kien, hay bo sung mot phan FAQ nho nhu dat som bao lau thi hop ly, di nhom co tiet kiem hon khong, va can chuan bi giay to gi. Cac phan hoi dap cu the giup bai viet day hon, co ich hon va tang kha nang duoc danh gia la noi dung chat luong.',
+                        ],
+                    ],
+                ],
+            ],
+            [
+                'slug' => 'co-nen-di-lotus-train-khong',
+                'title' => 'Co nen di Lotus Train khong: ai nen chon, ai nen can nhac va cach quyet dinh de phu hop',
+                'category' => 'So sanh va tu van',
+                'published_at' => '2026-03-29',
+                'read_time' => '9 phut doc',
+                'image' => asset('clients/images/bg_4.jpg'),
+                'sections' => [
+                    [
+                        'heading' => 'Nhung nhom khach phu hop',
+                        'paragraphs' => [
+                            'Lotus Train thuong phu hop voi nguoi muon trai nghiem hanh trinh cham hon, co thoi gian ngam canh va uu tien su thu thai hon la toc do. Cap doi, nhom ban nho va nhung nguoi muon co mot ky niem khac voi may bay thuong de de mo long hon voi loai hinh nay.',
+                            'Nguoc lai, voi nguoi can toi noi nhanh, lich trinh rat sat gio hoac khong quen nghi tren tau, can can nhac ky hon. Mot bai viet tu van dang tin nen chi ra ca hai mat de nguoi doc tu chon chinh xac cho minh.',
+                        ],
+                    ],
+                    [
+                        'heading' => 'So sanh cach ra quyet dinh',
+                        'paragraphs' => [
+                            'De quyet dinh co nen di Lotus Train khong, ban co the so sanh theo 4 tieu chi: thoi gian, ngan sach, muc do thoai mai mong muon va muc tieu chuyen di. Neu chuyen di ban huong den trai nghiem va nghi duong nhe, di tau co the hop. Neu muc tieu la den noi that nhanh de kip cong viec hoac lich tour day, lua chon khac co the thuc dung hon.',
+                            'Noi dung authority khong can khang dinh mot dap an duy nhat. Dieu co gia tri hon la dua cho nguoi doc mot framework de tu ra quyet dinh. Khi website cung cap duoc kieu thong tin nay, nguoi doc se cam thay duoc ton trong va de quay lai hon.',
+                        ],
+                    ],
+                    [
+                        'heading' => 'Cach viet bai tu van de tang do tin cay',
+                        'paragraphs' => [
+                            'Mot bai tu van tot nen ket thuc bang ket luan ro: ai nen dat, ai nen cho them thong tin, va khi nao nen doi phuong an khac. Neu co the, hay chen lien ket sang bai review chi tiet, bai huong dan dat cho va trang lien he de nguoi doc tiep tuc tim hieu.',
+                            'Voi muc tieu duyet quang cao, cac bai dang hoi dap, so sanh va tu van cu the nhu the nay se bo sung rat tot cho cac bai review. Chung tao thanh mot cum noi dung hop ly va day dan hon trong mat Google.',
+                        ],
+                    ],
+                ],
+            ],
         ];
     }
 }
