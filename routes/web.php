@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Clients\AboutController;
 use App\Http\Controllers\Clients\AuthController;
+use App\Http\Controllers\Clients\BlogController;
 use App\Http\Controllers\Clients\CheckoutController;
 use App\Http\Controllers\Clients\ContactController;
 use App\Http\Controllers\Clients\DestinationController;
@@ -18,6 +19,8 @@ Route::get('/sitemap.xml', [SitemapController::class, 'xml'])->name('sitemap.xml
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
+Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
 Route::get('/contact', fn () => redirect()->route('home'))->name('contact');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.submit');
 

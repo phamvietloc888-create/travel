@@ -110,6 +110,7 @@
                     <li class="nav-item {{ request()->routeIs('about') ? 'active' : '' }}"><a href="{{ route('about') }}" class="nav-link">Giới thiệu</a></li>
                     <li class="nav-item {{ request()->routeIs('destinations.index') ? 'active' : '' }}"><a href="{{ route('destinations.index') }}" class="nav-link">Điểm đến</a></li>
                     <li class="nav-item {{ request()->routeIs('tours.index') ? 'active' : '' }}"><a href="{{ route('tours.index') }}" class="nav-link">Tours</a></li>
+                    <li class="nav-item {{ request()->routeIs('blog.*') ? 'active' : '' }}"><a href="{{ route('blog.index') }}" class="nav-link">Blog</a></li>
                 </ul>
             </div>
         </div>
