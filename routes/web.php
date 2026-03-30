@@ -23,6 +23,7 @@ Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
 Route::view('/privacy-policy', 'clients.privacy-policy')->name('privacy-policy');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+Route::get('/contact/feed', [ContactController::class, 'feed'])->middleware('auth')->name('contact.feed');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.submit');
 
 Route::get('/payment-settings/qr', [CheckoutController::class, 'paymentQr'])->name('payment.qr');

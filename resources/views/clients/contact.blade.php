@@ -8,11 +8,11 @@
             <div class="col-md-9 ftco-animate pb-5 text-center">
                 <p class="breadcrumbs">
                     <span class="mr-2">
-                        <a href="{{ route('home') }}">Trang chủ <i class="fa fa-chevron-right"></i></a>
+                        <a href="{{ route('home') }}">Trang chu <i class="fa fa-chevron-right"></i></a>
                     </span>
-                    <span>Hỗ trợ <i class="fa fa-chevron-right"></i></span>
+                    <span>Ho tro <i class="fa fa-chevron-right"></i></span>
                 </p>
-                <h1 class="mb-0 bread">Chat với hỗ trợ</h1>
+                <h1 class="mb-0 bread">Nhan tin voi ho tro</h1>
             </div>
         </div>
     </div>
@@ -27,25 +27,37 @@
                 </div>
             @endif
 
+            @if (session('error'))
+                <div class="support-chat-alert support-chat-alert-error">
+                    {{ session('error') }}
+                </div>
+            @endif
+
+            @unless($chatReady)
+                <div class="support-chat-alert support-chat-alert-warning">
+                    Tinh nang ho tro dang duoc cap nhat tren server. Vui long thu lai sau.
+                </div>
+            @endunless
+
             @guest
                 <div class="support-chat-guest">
                     <div class="support-chat-head">
                         <div>
                             <span class="support-chat-kicker">Lotus Vietnam Travel</span>
-                            <h3>Đăng nhập để bắt đầu chat</h3>
+                            <h3>Dang nhap de bat dau chat</h3>
                         </div>
-                        <span class="support-chat-status">Đang online</span>
+                        <span class="support-chat-status">Online</span>
                     </div>
 
                     <div class="support-chat-empty">
                         <div class="support-chat-avatar">
                             <i class="fa fa-comments"></i>
                         </div>
-                        <h4>Khung liên hệ đã được đổi sang chat</h4>
-                        <p>Bạn đăng nhập là có thể gửi tin nhắn trực tiếp và xem phản hồi từ quản trị viên ngay tại đây.</p>
+                        <h4>Khung lien he da doi sang chat</h4>
+                        <p>Ban dang nhap la co the gui tin nhan truc tiep va nhan phan hoi tu admin ngay tai day.</p>
                         <div class="support-chat-actions">
-                            <a href="{{ route('login') }}" class="btn btn-primary px-4 py-3">Đăng nhập</a>
-                            <a href="{{ route('register') }}" class="btn btn-outline-dark px-4 py-3">Tạo tài khoản</a>
+                            <a href="{{ route('login') }}" class="btn btn-primary px-4 py-3">Dang nhap</a>
+                            <a href="{{ route('register') }}" class="btn btn-outline-dark px-4 py-3">Tao tai khoan</a>
                         </div>
                     </div>
                 </div>
@@ -53,20 +65,20 @@
                 <div class="support-chat-shell">
                     <div class="support-chat-head">
                         <div>
-                            <span class="support-chat-kicker">Hỗ trợ khách hàng</span>
+                            <span class="support-chat-kicker">Ho tro khach hang</span>
                             <h3>{{ auth()->user()->name }}</h3>
-                            <p>Gửi câu hỏi về tour, booking hoặc thanh toán. Admin sẽ trả lời trong cùng hội thoại này.</p>
+                            <p>Gui cau hoi ve tour, booking hoac thanh toan. Khung chat se tu dong cap nhat khi co phan hoi moi.</p>
                         </div>
-                        <span class="support-chat-status">Đang online</span>
+                        <span class="support-chat-status">Online</span>
                     </div>
 
-                    <div class="support-chat-body">
+                    <div class="support-chat-body" id="supportChatMessages">
                         @forelse ($messages as $message)
                             @php($isAdmin = strtoupper((string) $message->sender_type) === 'ADMIN')
                             <div class="support-chat-row {{ $isAdmin ? 'is-admin' : 'is-user' }}">
                                 <div class="support-chat-bubble">
                                     <div class="support-chat-meta">
-                                        <span>{{ $isAdmin ? 'Hỗ trợ viên' : 'Bạn' }}</span>
+                                        <span>{{ $isAdmin ? 'Ho tro vien' : 'Ban' }}</span>
                                         <span>{{ $message->created_at?->format('H:i d/m') }}</span>
                                     </div>
                                     <p>{{ $message->message }}</p>
@@ -77,8 +89,8 @@
                                 <div class="support-chat-avatar">
                                     <i class="fa fa-headphones"></i>
                                 </div>
-                                <h4>Chưa có tin nhắn nào</h4>
-                                <p>Nhập nội dung bên dưới để bắt đầu cuộc trò chuyện với đội ngũ hỗ trợ.</p>
+                                <h4>Chua co tin nhan nao</h4>
+                                <p>Nhap noi dung ben duoi de bat dau cuoc tro chuyen voi doi ngu ho tro.</p>
                             </div>
                         @endforelse
                     </div>
@@ -87,13 +99,16 @@
                         @csrf
                         <div class="support-chat-input-wrap">
                             <textarea
+                                id="supportChatInput"
                                 name="message"
                                 rows="2"
                                 class="form-control support-chat-input @error('message') is-invalid @enderror"
-                                placeholder="Nhập nội dung cần hỗ trợ..."
+                                placeholder="Nhap noi dung can ho tro..."
+                                @disabled(! $chatReady)
                             >{{ old('message') }}</textarea>
-                            <button type="submit" class="btn btn-primary support-chat-send">Gửi</button>
+                            <button type="submit" class="btn btn-primary support-chat-send" @disabled(! $chatReady)>Gui</button>
                         </div>
+                        <small class="support-chat-note">Khung chat se tu dong cap nhat sau moi 12 giay.</small>
                         @error('message')
                             <small class="text-danger d-block mt-2">{{ $message }}</small>
                         @enderror
@@ -127,6 +142,18 @@
         border: 1px solid #9ee6b3;
         color: #166534;
         font-weight: 600;
+    }
+
+    .support-chat-alert-error {
+        background: #fff1f2;
+        border-color: #fecdd3;
+        color: #be123c;
+    }
+
+    .support-chat-alert-warning {
+        background: #fff7ed;
+        border-color: #fdba74;
+        color: #c2410c;
     }
 
     .support-chat-head {
@@ -259,72 +286,60 @@
         font-weight: 700 !important;
     }
 
+    .support-chat-note {
+        display: block;
+        margin-top: 10px;
+        color: #64748b;
+        font-size: 12px;
+    }
+
+    .support-chat-guest,
     .support-chat-empty {
-        min-height: 280px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 12px;
-        padding: 48px 24px;
         text-align: center;
     }
 
+    .support-chat-empty {
+        padding: 34px 20px;
+    }
+
     .support-chat-avatar {
-        width: 72px;
-        height: 72px;
+        width: 74px;
+        height: 74px;
+        margin: 0 auto 16px;
+        border-radius: 24px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        border-radius: 22px;
-        background: linear-gradient(135deg, #39b54a 0%, #8ce99a 100%);
-        color: #fff;
+        background: linear-gradient(135deg, #39b54a 0%, #7ae582 100%);
+        color: #ffffff;
         font-size: 28px;
-        box-shadow: 0 18px 28px rgba(57, 181, 74, 0.24);
-    }
-
-    .support-chat-empty h4 {
-        margin: 0;
-        font-size: 24px;
-        color: #102418;
+        box-shadow: 0 20px 32px rgba(57, 181, 74, 0.24);
     }
 
     .support-chat-actions {
         display: flex;
-        gap: 12px;
-        margin-top: 8px;
-        flex-wrap: wrap;
         justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 20px;
     }
 
     .btn-outline-dark {
-        border: 1px solid #111827;
-        color: #111827;
-        background: #fff;
+        border: 1px solid #111111;
+        color: #111111;
+        background: transparent;
     }
 
-    .btn-outline-dark:hover {
-        background: #111827;
-        color: #fff;
+    .btn-outline-dark:hover,
+    .btn-outline-dark:focus {
+        background: #111111;
+        color: #ffffff;
     }
 
     @media (max-width: 767.98px) {
-        .support-chat-head {
-            flex-direction: column;
-            padding: 20px;
-        }
-
-        .support-chat-head h3 {
-            font-size: 24px;
-        }
-
-        .support-chat-body {
-            padding: 16px;
-            max-height: 480px;
-        }
-
-        .support-chat-bubble {
-            max-width: 92%;
+        .support-chat-head,
+        .support-chat-form {
+            padding: 18px;
         }
 
         .support-chat-input-wrap {
@@ -335,6 +350,88 @@
         .support-chat-send {
             width: 100%;
         }
+
+        .support-chat-bubble {
+            max-width: 92%;
+        }
     }
 </style>
+
+@auth
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const messagesWrap = document.getElementById('supportChatMessages');
+            const input = document.getElementById('supportChatInput');
+            let lastMessageId = {{ (int) ($messages->sortBy('created_at')->last()?->id ?? 0) }};
+
+            const renderMessages = (messages) => {
+                if (!messagesWrap) {
+                    return;
+                }
+
+                if (!messages.length) {
+                    messagesWrap.innerHTML = `
+                        <div class="support-chat-empty">
+                            <div class="support-chat-avatar">
+                                <i class="fa fa-headphones"></i>
+                            </div>
+                            <h4>Chua co tin nhan nao</h4>
+                            <p>Nhap noi dung ben duoi de bat dau cuoc tro chuyen voi doi ngu ho tro.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                messagesWrap.innerHTML = messages.map((message) => {
+                    const isAdmin = message.sender_type === 'ADMIN';
+                    const safeMessage = String(message.message || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+                    return `
+                        <div class="support-chat-row ${isAdmin ? 'is-admin' : 'is-user'}">
+                            <div class="support-chat-bubble">
+                                <div class="support-chat-meta">
+                                    <span>${message.sender_name || (isAdmin ? 'Ho tro vien' : 'Ban')}</span>
+                                    <span>${message.created_at || ''}</span>
+                                </div>
+                                <p>${safeMessage}</p>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                messagesWrap.scrollTop = messagesWrap.scrollHeight;
+            };
+
+            const pollFeed = async () => {
+                if (input && document.activeElement === input && input.value.trim() !== '') {
+                    return;
+                }
+
+                try {
+                    const response = await fetch(@json(route('contact.feed')), {
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'Accept': 'application/json',
+                        },
+                    });
+
+                    if (!response.ok) {
+                        return;
+                    }
+
+                    const payload = await response.json();
+
+                    if ((payload.last_message_id || 0) !== lastMessageId) {
+                        lastMessageId = payload.last_message_id || 0;
+                        renderMessages(payload.messages || []);
+                    }
+                } catch (error) {
+                    console.warn('Support chat polling failed', error);
+                }
+            };
+
+            window.setInterval(pollFeed, 12000);
+        });
+    </script>
+@endauth
 @endsection

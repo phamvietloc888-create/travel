@@ -1,3 +1,9 @@
+@php
+    use App\Models\ChatThread;
+
+    $adminChatAttentionCount = ChatThread::adminAttentionCount();
+@endphp
+
 <aside
     class="fixed inset-y-3 left-3 z-30 w-72 -translate-x-[120%] rounded-3xl border border-white/70 bg-white/80 p-4 shadow-2xl shadow-slate-300/50 backdrop-blur-xl transition-transform duration-300 dark:border-slate-800 dark:bg-slate-900/85 dark:shadow-none md:translate-x-0"
     :class="{'translate-x-0': Alpine.store('ui').sidebarOpen, '-translate-x-[120%]': !Alpine.store('ui').sidebarOpen}"
@@ -42,6 +48,11 @@
                     </svg>
                 </span>
                 <span>{{ $item['label'] }}</span>
+                @if($item['route'] === 'admin.chats.index' && $adminChatAttentionCount > 0)
+                    <span class="ml-auto inline-flex min-w-6 items-center justify-center rounded-full bg-rose-500 px-2 py-0.5 text-[11px] font-bold text-white">
+                        {{ $adminChatAttentionCount }}
+                    </span>
+                @endif
             </a>
         @endforeach
     </nav>

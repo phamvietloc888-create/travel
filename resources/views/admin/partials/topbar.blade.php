@@ -1,3 +1,9 @@
+@php
+    use App\Models\ChatThread;
+
+    $adminChatAttentionCount = ChatThread::adminAttentionCount();
+@endphp
+
 <header class="sticky top-0 z-20 border-b border-white/60 bg-white/70 px-4 py-3 backdrop-blur-xl dark:border-slate-800 dark:bg-slate-900/70 sm:px-6">
     <div class="flex items-center gap-3">
         <button class="btn-ghost md:hidden" @click="Alpine.store('ui').toggleSidebar()">
@@ -30,6 +36,16 @@
         </form>
 
         <div class="ml-auto flex items-center gap-2">
+            <a href="{{ route('admin.chats.index') }}" class="relative btn-ghost" title="Tin nhan ho tro">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 14a2 2 0 01-2 2H8l-5 4V6a2 2 0 012-2h14a2 2 0 012 2z" />
+                </svg>
+                @if($adminChatAttentionCount > 0)
+                    <span id="adminChatBadge" class="absolute -right-1 -top-1 inline-flex min-h-5 min-w-5 items-center justify-center rounded-full bg-rose-500 px-1 text-[10px] font-bold text-white">
+                        {{ $adminChatAttentionCount > 9 ? '9+' : $adminChatAttentionCount }}
+                    </span>
+                @endif
+            </a>
             <button class="btn-ghost" @click="Alpine.store('ui').toggleTheme()" title="Đổi giao diện">
                 <svg x-show="!Alpine.store('ui').dark" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 14v2m9-9h-2M5 12H3m13.95-6.95-1.42 1.42M7.47 16.53l-1.42 1.42m11.9 0-1.42-1.42M7.47 7.47 6.05 6.05M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
@@ -73,3 +89,57 @@
         </div>
     </div>
 </header>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const badge = document.getElementById('adminChatBadge');
+
+        const ensureBadge = (count) => {
+            if (!badge && count <= 0) {
+                return;
+            }
+        };
+
+        window.setInterval(async () => {
+            try {
+                const response = await fetch(@json(route('admin.chats.attention-count')), {
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json',
+                    },
+                });
+
+                if (!response.ok) {
+                    return;
+                }
+
+                const payload = await response.json();
+                const count = Number(payload.attention_count || 0);
+                const nextLabel = count > 9 ? '9+' : String(count);
+                let currentBadge = document.getElementById('adminChatBadge');
+
+                if (count <= 0) {
+                    currentBadge?.remove();
+                    return;
+                }
+
+                if (!currentBadge) {
+                    const chatLink = document.querySelector('a[title="Tin nhan ho tro"]');
+
+                    if (!chatLink) {
+                        return;
+                    }
+
+                    currentBadge = document.createElement('span');
+                    currentBadge.id = 'adminChatBadge';
+                    currentBadge.className = 'absolute -right-1 -top-1 inline-flex min-h-5 min-w-5 items-center justify-center rounded-full bg-rose-500 px-1 text-[10px] font-bold text-white';
+                    chatLink.appendChild(currentBadge);
+                }
+
+                currentBadge.textContent = nextLabel;
+            } catch (error) {
+                console.warn('Admin attention polling failed', error);
+            }
+        }, 12000);
+    });
+</script>

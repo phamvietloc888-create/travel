@@ -31,7 +31,9 @@ Route::middleware(['auth', 'admin'])
         Route::delete('reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
 
         Route::get('chats', [ChatController::class, 'index'])->name('chats.index');
+        Route::get('chats/attention-count', [ChatController::class, 'attentionCount'])->name('chats.attention-count');
         Route::get('chats/{thread}', [ChatController::class, 'show'])->name('chats.show');
+        Route::get('chats/{thread}/feed', [ChatController::class, 'feed'])->name('chats.feed');
         Route::post('chats/{thread}/reply', [ChatController::class, 'reply'])->name('chats.reply');
 
         Route::get('histories', [HistoryController::class, 'index'])->name('histories.index');
