@@ -2,8 +2,9 @@
     use App\Models\ChatThread;
 
     $chatMessages = collect();
+    $chatReady = ChatThread::chatTablesReady();
 
-    if (auth()->check()) {
+    if ($chatReady && auth()->check()) {
         $chatThread = ChatThread::query()
             ->with(['messages.sender'])
             ->firstOrCreate(
