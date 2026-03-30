@@ -13,16 +13,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     
-	<link rel="stylesheet" href="{{ asset('clients/css/bootstrap.min.css') }}">
+	<link rel="stylesheet" href="/clients/css/bootstrap.min.css">
 
-<link rel="stylesheet" href="{{ asset('clients/css/animate.css') }}">
-<link rel="stylesheet" href="{{ asset('clients/css/owl.carousel.min.css') }}">
-<link rel="stylesheet" href="{{ asset('clients/css/owl.theme.default.min.css') }}">
-<link rel="stylesheet" href="{{ asset('clients/css/magnific-popup.css') }}">
-<link rel="stylesheet" href="{{ asset('clients/css/bootstrap-datepicker.css') }}">
-<link rel="stylesheet" href="{{ asset('clients/css/jquery.timepicker.css') }}">
-<link rel="stylesheet" href="{{ asset('clients/css/flaticon.css') }}">
-<link rel="stylesheet" href="{{ asset('clients/css/style.css') }}">
+<link rel="stylesheet" href="/clients/css/animate.css">
+<link rel="stylesheet" href="/clients/css/owl.carousel.min.css">
+<link rel="stylesheet" href="/clients/css/owl.theme.default.min.css">
+<link rel="stylesheet" href="/clients/css/magnific-popup.css">
+<link rel="stylesheet" href="/clients/css/bootstrap-datepicker.css">
+<link rel="stylesheet" href="/clients/css/jquery.timepicker.css">
+<link rel="stylesheet" href="/clients/css/flaticon.css">
+<link rel="stylesheet" href="/clients/css/style.css">
 <style>
     :root {
         --site-primary: #111111;
@@ -267,8 +267,8 @@
     @include('clients.blocks.footer')
 
     {{-- JS --}}
-    <script src="{{ asset('clients/js/jquery.min.js') }}"></script>
-    <script src="{{ asset('clients/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="/clients/js/jquery.min.js"></script>
+    <script src="/clients/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

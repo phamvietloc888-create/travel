@@ -9,6 +9,7 @@ use App\Models\PaymentSetting;
 use App\Models\Tour;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
@@ -95,7 +96,9 @@ class CheckoutController extends Controller
         $simulationCode = 'PAY'.strtoupper(Str::random(6));
         session(['booking_payment_code_'.$booking->id => $simulationCode]);
 
-        $paymentSettings = PaymentSetting::query()->first();
+        $paymentSettings = Schema::hasTable('payment_settings')
+            ? PaymentSetting::query()->first()
+            : null;
 
         return view('clients.payment', [
             'booking' => $booking,
@@ -172,6 +175,8 @@ class CheckoutController extends Controller
 
     public function paymentQr(): BinaryFileResponse
     {
+        abort_unless(Schema::hasTable('payment_settings'), 404);
+
         $settings = PaymentSetting::query()->first();
         abort_if(!$settings || !$settings->qr_code_path, 404);
 
