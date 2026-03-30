@@ -4,8 +4,7 @@
     "healthcheckPath": "/up",
     "healthcheckTimeout": 300,
     "restartPolicyType": "on_failure",
-    "restartPolicyMaxRetries": 10,
-    "startCommand": "php artisan migrate --force && php -S 0.0.0.0:${PORT:-8000} -t public"
+    "restartPolicyMaxRetries": 10
   },
   "environmentVariables": {
     "APP_ENV": "production",
