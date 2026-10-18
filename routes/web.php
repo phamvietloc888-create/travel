@@ -1,16 +1,16 @@
 <?php
 
 use App\Http\Controllers\Auth\ResetPasswordController;
-use App\Http\Controllers\Clients\AboutController;
-use App\Http\Controllers\Clients\AuthController;
-use App\Http\Controllers\Clients\CheckoutController;
-use App\Http\Controllers\Clients\ContactController;
-use App\Http\Controllers\Clients\DestinationController;
-use App\Http\Controllers\Clients\HomeController;
-use App\Http\Controllers\Clients\ProfileController;
-use App\Http\Controllers\Clients\ReviewController;
-use App\Http\Controllers\Clients\TourController;
-use App\Http\Controllers\SitemapController;
+use App\Http\Controllers\clients\AboutController;
+use App\Http\Controllers\clients\AuthController;
+use App\Http\Controllers\clients\CheckoutController;
+use App\Http\Controllers\clients\ContactController;
+use App\Http\Controllers\clients\DestinationController;
+use App\Http\Controllers\clients\HomeController;
+use App\Http\Controllers\clients\ProfileController;
+use App\Http\Controllers\clients\ReviewController;
+use App\Http\Controllers\clients\TourController;
+use App\Http\Controllers\citemapController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/sitemap', [SitemapController::class, 'index'])->name('sitemap.index');
